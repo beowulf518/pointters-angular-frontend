@@ -1,0 +1,189 @@
+<div id="index_contentarea" class="col-md-9 col-sm-7 col-xs-12 margin-top-30 padding-bottom-200">
+    <div id="background_check_form" class="col-xs-12 col-md-8 padding-0 color-bg-white padding-bottom-60" style="border-left:1px solid #efefef; border-right:1px solid #efefef; border-radius:5px;">
+
+        <div class="col-xs-12 col-md-12 padding-30" style="position:relative;">
+
+            <p class="display-inlineBlock" style="position:absolute; top:35px; right:30px;">
+                <span class="color-gray font-weight-600">Status:</span>
+                <span class="color-blue font-weight-600">Not Started</span>
+            </p>
+
+            <h3 class="color-text-black font-weight-600 margin-0">Background Check</h3>
+
+            <h4 class="color-text-black font-weight-600 margin-top-40">Fill Out Application</h4>
+
+            <div>
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-6 col-md-6 padding-left-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">First Name</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['firstName']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" placeholder="First Name" [(ngModel)]="model.firstName">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-6 padding-right-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Last Name</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['lastName']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" placeholder="Last Name" [(ngModel)]="model.lastName">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-12 col-md-12 padding-left-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Middle Name</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['middleName']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" placeholder="Middle Name" [(ngModel)]="model.middleName">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Email</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['email']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.email" placeholder="Email">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Phone number</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" style="position:relative;" [ngClass]="{'err': invalidFields['phone']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.phone" placeholder="Phone">
+                            <span style="position:absolute; right:15px; top:7px;">
+                                     <p class="color-gray display-inlineBlock margin-right-5">Confirmed</p>
+                                     <img src="assets/images/icons/icon_check_red.png" alt="">
+                                 </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <p class="color-gray">Birth Day</p>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <div class="col-xs-4 col-md-4 padding-left-0">
+                            <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['bd_month']}">
+                                <ng-select [items]="monthOptions" bindValue="value" [(ngModel)]="model.bd_month" (ngModelChange)="handleSelectMonth($event)" placeholder="Month">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-md-4 padding-0">
+                            <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['bd_day']}">
+                                <ng-select [items]="currentDayOptions" bindValue="value" [(ngModel)]="model.bd_day"  placeholder="Day">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-md-4 padding-right-0">
+                            <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['bd_year']}">
+                                <ng-select [items]="yearOptions" bindValue="value" [(ngModel)]="model.bd_year"  placeholder="Year">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-6 col-md-6 padding-left-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Social Security Number</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['ssn']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.ssn"  numberOnly placeholder="SSN" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-6 padding-right-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Postal Code</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['zip']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.zip" numberOnly placeholder="Postal Code" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+
+                    <div class="col-xs-6 col-md-6 padding-left-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Driver Licence Number</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['license']}">
+                            <input type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.license"  placeholder="Licence">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-6 padding-right-0">
+                        <div class="col-xs-12 col-md-12 padding-0">
+                            <p class="color-gray">Driver Licence State</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0" [ngClass]="{'err': invalidFields['licenseState']}">
+                            <ng-select *ngIf="user && user.location && user.location.country === 'US'" placeholder="State" [items]="stateOptions" bindValue="value" [(ngModel)]="model.licenseState" >
+                            </ng-select>
+
+                            <input *ngIf="user && user.location && user.location.country !== 'US'" type="text" class="form-control boxshadow-none color-darkgray" [(ngModel)]="model.licenseState" placeholder="Licence State">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+                    <p class="err-msg">{{isInvalid ? 'Form contains invalid data' : ''}}</p>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-10">
+
+                    <li id="li_addService" onclick="" class="display-inlineBlock margin-right-12">
+                        <a class="padding-8 padding-left-25 padding-right-25 text-uppercase font-weight-600 color-blue" style="border-radius:20px; border:1px solid #00B4F1;">
+                            Save
+                           </a>
+                    </li>
+
+                    <li id="li_cancel" class="display-inlineBlock">
+                        <a (click)="submit()" class="padding-8 padding-left-20 padding-right-20 text-uppercase font-weight-600 color-text-white" [ngClass]="{ 'bg-blue': true }" style="border-radius:20px; border:1px solid #00B4F1;">
+                              Submit
+                            </a>
+                    </li>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

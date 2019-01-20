@@ -1,0 +1,20 @@
+.comment-input {
+
+}
+
+.comment-input:focus {
+  outline: none;
+}
+
+.post-tags {
+  padding: 10px;
+  align-items: center;
+  display: flex;
+  background: #F6F7F9;
+}
+.color-text-black a {
+  color: #000;
+}
+.green-pic {
+  margin-bottom: 2px;
+}

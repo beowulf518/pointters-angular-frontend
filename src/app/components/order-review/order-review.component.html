@@ -1,0 +1,51 @@
+<div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px; position:relative;">
+    <div class="col-xs-12 col-md-12 padding-right-0 padding-0">
+        <div class="col-xs-12 col-md-12 padding-0">
+            <h4 class="color-text-black font-weight-600 margin-top-0">Review Order</h4>
+        </div>
+        <div class="col-xs-12 col-md-12 padding-0">
+            <div class="order_review-innerWrapper">
+                <div class="col-xs-12 col-md-12 padding-0">
+                    <p class="color-darkgray margin-top-20">Quality of Service</p>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 order_review_quality_container">
+                    <div (click)="qualityOfService = 1" [ngClass]="{'order_review_quality':true,'selected':qualityOfService == 1,'disabled':isReviewed}">1</div>
+                    <div (click)="qualityOfService = 2" [ngClass]="{'order_review_quality':true,'selected':qualityOfService == 2,'disabled':isReviewed}">2</div>
+                    <div (click)="qualityOfService = 3" [ngClass]="{'order_review_quality':true,'selected':qualityOfService == 3,'disabled':isReviewed}">3</div>
+                    <div (click)="qualityOfService = 4" [ngClass]="{'order_review_quality':true,'selected':qualityOfService == 4,'disabled':isReviewed}">4</div>
+                    <div (click)="qualityOfService = 5" [ngClass]="{'order_review_quality':true,'selected':qualityOfService == 5,'disabled':isReviewed}">5</div>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-10">
+                    <p class="color-darkgray margin-top-20 margin-bottom-30">Overall Rating {{overallRating | number:'1.0-0'}}%</p>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 order_review_range_container">
+                    <div class="range-min">0</div>
+                    <div class="range-max">100</div>
+                    <nouislider [connect]="true" [min]="0" [max]="100" [(ngModel)]="overallRating" [ngClass]="{'disabled':isReviewed}"></nouislider>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-40">
+                    <p class="color-darkgray margin-top-20">Will You Buy Again</p>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-10 padding-0">
+                    <div class="col-xs-2 col-md-2 padding-left-0">
+                        <input [(ngModel)]="willingToBuyServiceAgain" name="buyAgain" id="buyAgain_yes" [disabled]="isReviewed" [value]="1" type="radio" class="form-control">
+                        <label for="buyAgain_yes" class="display-inlineBlock color-darkgray text-uppercase">yes</label>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <input [(ngModel)]="willingToBuyServiceAgain" name="buyAgain" id="buyAgain_no" [disabled]="isReviewed" [value]="0" type="radio" class="form-control">
+                        <label for="buyAgain_no" class="display-inlineBlock color-darkgray text-uppercase margin-left-8">no</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-10 padding-0">
+                    <p class="color-darkgray margin-top-20">Comment</p>
+                    <textarea *ngIf="isReviewed" cols="30" rows="3" [disabled]="isReviewed" class="form-control boxshadow-none order_review_comment" style="border:1px solid #e4e4e4;">{{comment}}</textarea>
+                    <textarea *ngIf="!isReviewed" [(ngModel)]="comment" cols="30" rows="3" class="form-control boxshadow-none order_review_comment" style="border:1px solid #e4e4e4;"></textarea>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-20 padding-0" *ngIf="!isReviewed">
+                    <span class="order_review-error">{{error.msg}}</span>
+                    <a (click)="sendReview()" class="pull-right text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-25 padding-right-25" style="border-radius:15px;">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+
+agm-map {
+    height: 300px;
+}
+input[type="checkbox"] {
+    display: none;
+}
+input[type="checkbox"]:checked+label:after {
+    display: block;
+}
+input[type="checkbox"]+label {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+    line-height: 1;
+    font-weight: 500;
+}
+input[type="checkbox"]+label:after,
+input[type="checkbox"]+label:before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: block;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+input[type="checkbox"]+label:after {
+    display: none;
+    background-color: #00B4F1;
+    background-image: url('assets/images/icons/ic_done_black_24px.png');
+    background-position: center;
+    background-size: contain;
+}
+input[type="checkbox"]+label:before {
+    border: 2px solid rgb(172, 178, 186);
+}
+.disable_input{
+pointer-events: none;
+}
+
+
+input[type="radio"] {
+    display: none;
+}
+input[type="radio"]:checked+label:after {
+    display: block;
+}
+input[type="radio"]+label {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    line-height: 1;
+    font-weight: 400;
+    cursor: pointer;
+}
+input[type="radio"]:disabled+label {
+    cursor: default;
+}
+input[type="radio"]+label:after,
+input[type="radio"]+label:before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: block;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+input[type="radio"]+label:after {
+    display: none;
+    background-color: #00B4F1;
+    background-image: url('assets/images/icons/ic_done_black_24px.png');
+    background-position: center;
+    background-size: contain;
+}
+input[type="radio"]+label:before {
+    border: 2px solid rgb(172, 178, 186);
+}
+.ngx-datepicker-container .ngx-datepicker-input{
+    width:100%;
+    padding: 6px 10px;
+    border:none;
+}
+.custom-select select{
+    padding: 5px 8px;
+    width: 85%;
+    background: transparent;
+    background-image: none;
+    -moz-appearance:none;
+    -webkit-appearance: none;
+}
+.custom-select select:focus{
+    outline: none;
+}
+.order-change-btn img{
+    display: inline;
+}
+.order-change-btn p{
+    display: inline;
+    margin-left: 9px;
+}
+.oreder_image_progress{
+    position: absolute;
+    top:20px;
+}
+.oreder_image_progress-container{
+    position: relative;
+    background-image: url('assets/images/icons/order_fulfillment_process.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 63px;
+    margin-top: 25px;
+}
+#files_order{
+    display: none;
+}
+.absolute_center{
+    position:absolute; 
+    top:50%; 
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.file_link{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+.disabled_input{
+    pointer-events: none;
+}

@@ -1,0 +1,132 @@
+.custom-select{
+    position: relative;
+}
+.error-msg{
+    position: absolute;
+    color: red;
+    right: 25px;
+    top: 35px;
+}
+.input-container{
+    position:relative;
+}
+.card-control-container p{
+    cursor: pointer;
+}
+.shiping_panel_address{
+    width: 100%;
+    display: inline!important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card-control-container p.cursor-default{
+    cursor: default;    
+}
+.devider-left{
+    margin-left:10px;
+    padding-left: 10px;
+    border-left:1px solid #e2e2e2;
+}
+.devider-right{
+    margin-right:10px;
+    padding-right: 10px;
+    border-right:1px solid #e2e2e2;
+}
+.btn-color-custom{
+    background-color: #00B4F1;
+    color: white;
+    border-color: #00B4F1;
+}
+.custom-select select{
+    padding: 5px 8px;
+    width: 85%;
+    background: transparent;
+    background-image: none;
+    -moz-appearance:none;
+    -webkit-appearance: none;
+}
+.custom-select select:focus{
+    outline: none;
+}
+.btn-color-custom{
+    background-color: #00B4F1;
+    color: white;
+    border-color: #00B4F1;
+}
+.payment_panel{
+    cursor: pointer;
+    padding: 13px 15px;
+    height: 50px;
+}
+.payment_panel .payment_image img{
+    height: 24px;
+}
+.shiping_panel{
+    padding: 15px 0;
+}
+.shiping_panel_address{
+    font-weight: 500;
+}
+.color-checkout-price{
+    color: #707070 !important;
+}
+.checkout_plus_minus{
+    width: 24px;
+    height: 24px;
+    background-origin: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.2s ease-in-out;
+}
+.checkout_minus{
+    background-image: url('assets/images/icons/minus.png');
+}
+.checkout_plus{
+    background-image: url('assets/images/icons/check_out_plus.png');
+}
+.checkout_minus:hover{
+    background-image: url('assets/images/icons/minus_hover.png');
+}
+.checkout_plus:hover{
+    background-image: url('assets/images/icons/check_out_plus_hover.png');
+}
+.confirm_btn{
+    transition: all 0.2s ease-in-out;
+}
+.confirm_btn.disabled{
+    filter: grayscale(1);
+    pointer-events: none;
+}
+.checkout_popup{
+display: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    background: rgba(0,0,0,.25);
+    z-index: 999;
+}
+.popup{
+    padding: 25px 0;
+    max-width: 350px;
+    width: 100%;
+    background: white;
+    box-shadow: 0px 5px 13px 0px rgba(0,0,0,.26);
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+
+}
+.popup .confirm_btn button{
+    width: 65%;
+    margin: 0 auto;
+}
+.popup .title,
+.popup .subtitle,
+.popup .back_link{
+    text-align: center;
+}

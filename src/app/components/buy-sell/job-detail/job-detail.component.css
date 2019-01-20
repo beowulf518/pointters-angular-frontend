@@ -1,0 +1,128 @@
+::ng-deep .swiper-button-next,
+::ng-deep .swiper-button-prev {
+  width: 27px;
+  height: 27px;
+  background-size: 27px 27px !important;
+}
+::ng-deep .swiper-button-next {
+  background-image: url("/assets/images/icons/slide_next.png") !important;
+}
+::ng-deep .swiper-button-prev {
+  background-image: url("/assets/images/icons/slide_previous.png") !important;
+}
+
+::ng-deep label[for='file-input']:hover {
+  cursor: pointer;
+}
+
+/* Style for autocomplete input Start*/
+
+::ng-deep .custom-autocomplete>.custom-autocomplete__container>.custom-autocomplete__input>input#search_places {
+  border: none;
+  outline: none;
+  height: 40px;
+  font-size: 14px;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown {
+  border: 1px solid #ccc;
+  width: 50%;
+  top: 35px;
+  left: 10px;
+  border-radius: 0 0 4px 4px;
+  /*height: 190px;*/
+  /*overflow: hidden;*/
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li.heading.heading-recent {
+  display: none !important;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li.currentlocation a {
+  font-weight: normal !important;
+  font-size: 14px !important;
+  color: #909090;
+  text-transform: capitalize;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li.currentlocation a {
+  background-color: unset !important;
+  color: #00B4F1;
+}
+
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li.active a {
+  background-color: unset !important;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li.active:hover a span{
+  color: #00B4F1;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li:nth-of-type(6),
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li:nth-of-type(7) {
+  display: none !important;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li a span.main-text,
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li a span.secondary_text {
+  font-weight: normal !important;
+  font-size: 14px !important;
+  color: #909090;
+}
+::ng-deep .custom-autocomplete ul.custom-autocomplete__dropdown li i.location-default-icon {
+  display: none !important;
+}
+/* Style for autocomplete input End*/
+
+
+::ng-deep .owl-dt-popup-container {
+  opacity: 1;
+  position: absolute;
+  left: 100px;
+  top: 41px;
+}
+
+a.requests {
+  color: inherit;
+}
+
+a.requests:hover {
+  color: #337ab7;
+}
+
+a[aria-expanded='false'] {
+  border-radius: 4px !important;
+}
+a[aria-expanded] {
+  height: 42px !important;
+  display: flex;
+  align-items: center;
+}
+
+.category_li:hover {
+  background-color: #d7d2d2;
+}
+
+
+.align-left {
+  text-align: left;
+}
+.clickable {
+  cursor: pointer;
+}
+.modal-datepicker span {
+  text-align: left;
+}
+.disabled-textarea {
+  cursor: default;
+  background-color: #fff;
+}
+.flex-aligner {
+  width: 50%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.del-btn {
+  position: absolute;
+  right: 155px;
+}

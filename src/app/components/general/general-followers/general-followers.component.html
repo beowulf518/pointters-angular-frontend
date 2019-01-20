@@ -1,0 +1,40 @@
+<div id="contentarea_editprofile" class="col-md-7 col-sm-9 col-xs-12">
+        <div class="following-container">
+            <h3 class="font-weight-600 margin-0 margin-bottom-20">Followers</h3>
+            <div class="row">
+                <div id="infinite-scroll-container"
+                class="jobs-scroller jobs-scroll-content col-xs-12 col-md-12 col-lg-12 padding-0 margin-top-20"
+                infiniteScroll
+                [scrollWindow]="true"
+                [infiniteScrollThrottle]="50"
+                [infiniteScrollDisabled]="!hasMore"
+                (scrolled)="scrollHandler()"
+                >
+                    <div *ngFor="let follower of followers" class="col-xs-12 col-md-4 padding-bottom-30 ">
+                        <div class="follower-card" [routerLink]="['/profile', follower.followFrom.id]">
+                            <div class="follower-card_image col-xs-12 col-md-12 text-center">
+                                <img [src]="follower.followFrom.profilePic" class="width-100-px height-100-px border-radius-50p" alt="">
+                            </div>
+                            <div class="follower-card_info col-xs-12 col-md-12 text-center">
+                                <p class="color-text-black font-weight-600 margin-bottom-3 margin-top-8">{{follower.followFrom.firstName}} {{follower.followFrom.lastName}}</p>
+                                <p class="follower_info-categories font-px-12 color-gray">{{follower.categories['0']}} {{follower.categories['1']?', '+follower.categories['1']+'...':''}}</p>
+                            </div>
+                            <div  class="follower-card_control col-xs-12 col-md-12 text-center margin-top-3">
+                                <a *ngIf="!follower.followFrom.isMutualFollow" (click)="follow(follower.followFrom.id); $event.stopPropagation();" class="btn_menu btn_menu_active text-uppercase" style="font-size: 14px !important;display: block;">Follow</a>
+                                <a *ngIf="follower.followFrom.isMutualFollow" (click)="unfollowUser(follower.followFrom.id); $event.stopPropagation();" class="btn_menu btn_menu_active text-uppercase" style="font-size: 14px !important;display: block;">Following</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+              <div class="d-flex justify-content-center" *ngIf="!hasMore && followers.length <= 0">
+                <div class="margin-top-100 text-bold text-center" style="max-width: 350px">
+                  <img style="width: 80px; height: 80px" src="assets/images/icons/team.png">
+                  <h4 class="text-bold"> You do not have any followers yet</h4>
+                  <button [routerLink]="['/general/invite']" class="btn btn-default margin-top-30 text-bold" style="border-radius: 30px; border:none; color: white;background: #00B4F1; padding: 10px 20px"> Find People</button>
+                </div>
+              </div>
+                <sk-three-bounce *ngIf="isLoading"></sk-three-bounce>
+            </div>
+        </div>
+    </div>

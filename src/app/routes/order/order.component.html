@@ -1,0 +1,376 @@
+<div id="index_main" class="col-xs-12 col-md-12 padding-0 padding-bottom-60 order-fulfillment-schedule" style="background-color:rgb(249,249,249)">
+
+    <div class="container">
+        <div id="index_sidepanel" *ngIf="order" class="order_fulfillment col-md-7 col-sm-7 col-xs-12 padding-left-60 margin-top-25">
+            <div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px;">
+                <h4 class="color-text-black font-weight-600 margin-top-0" style="float: left">
+                    <span>{{getTitle()}}</span>
+                </h4>
+                <div *ngIf="!order.sellerAcceptedBuyerDispute">
+                    <a (click)="startService()" *ngIf="orderStart&&isSeller&&!order.serviceStartDate&&!sellerAcceptedBuyerDispute" class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="z-index:999;border-radius:15px;float: right;margin-top: -30px;">Start Service</a>
+                    <a (click)="completeService()" *ngIf="orderComplete&&order.serviceStartDate&&!order.serviceCompleteDate&&!sellerAcceptedBuyerDispute" class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="z-index:999;border-radius:15px;float: right;margin-top: -30px;">Complete Service</a>
+                    <div class="oreder_image_progress-container">
+                        <img *ngIf="(order.serviceScheduleDate&&order.serviceScheduleEndDate&&order.sellerAcceptedScheduleTime)||order.serviceStartDate" class="oreder_image_progress sheduled_image" src="assets/images/icons/online2.png" style="left:26%" alt="">
+                        <img *ngIf="order.serviceStartDate" class="oreder_image_progress start_image" src="assets/images/icons/online2.png" style="left:48%" alt="">
+                        <img *ngIf="order.serviceCompleteDate" class="oreder_image_progress complete_image" src="assets/images/icons/online2.png" style="left:70.2%" alt="">
+                        <img *ngIf="order.review" class="oreder_image_progress acceptance_image" src="assets/images/icons/online2.png" style="left:92.39%" alt="">
+                    </div>
+                    <div class="col-xs-12 col-md-12 padding-0 margin-bottom-30" style="position:relative;">
+                        <p class="color-gray display-inlineBlock font-em-09" style="position:absolute; left:0px; top:8px;">Paid on {{order.createdAt | date:'dd/MM' }}</p>
+                        <p class="color-gray display-inlineBlock font-em-09" style="position:absolute; left:23%; top:8px;">Sheduled <span *ngIf="order.sellerAcceptedScheduleTimeDate">{{order.sellerAcceptedScheduleTimeDate | date:'dd/MM' }}</span></p>
+                        <p class="color-gray display-inlineBlock font-em-09" style="position:absolute; right:48%; top:8px;">Start <span *ngIf="order.serviceStartDate">{{order.serviceStartDate | date:'dd/MM' }}</span></p>
+                        <p class="color-gray display-inlineBlock font-em-09" style="position:absolute; right:23%; top:8px;">Complete <span *ngIf="order.serviceCompleteDate">{{order.serviceCompleteDate | date:'dd/MM' }}</span></p>
+                        <p class="color-gray display-inlineBlock font-em-09" style="position:absolute; right:0px; top:8px;">Acceptance <span *ngIf="order.review&& order.review.createdAt">{{order.review.createdAt | date:'dd/MM' }}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="order.buyerOrderDispute" class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px; position:relative;">
+                    <div class="col-xs-12 col-md-12 padding-right-0 padding-0">
+                        <div class="col-xs-12 col-md-12">
+                            <h4 class="color-text-black font-weight-600 margin-top-0" *ngIf="isBuyer&&!order.sellerAcceptedBuyerDispute">Request Cancellation</h4>
+                            <h4 class="color-text-black font-weight-600 margin-top-0" *ngIf="isSeller&&!order.sellerAcceptedBuyerDispute">Buyer Requested cancellation</h4>
+                            <h4 class="color-text-black font-weight-600 margin-top-0" *ngIf="isBuyer&&order.sellerAcceptedBuyerDispute">Request Cancellation Accepted</h4>
+                            <h4 class="color-text-black font-weight-600 margin-top-0" *ngIf="isSeller&&order.sellerAcceptedBuyerDispute">Buyer Requested cancellation Accepted</h4>
+                            <p class="color-darkgray margin-top-20">Reason to Cancel</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 margin-top-5 padding-0">
+                            <div class="col-xs-12 col-md-12">
+                                <input type="radio" id="cancel_1" [(ngModel)]="reason" value="not_on_time" class="form-control" [disabled]="true">
+                                <label for="cancel_1" class="color-gray">Seller did not completed on time</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 margin-top-5 padding-0">
+                            <div class="col-xs-12 col-md-12">
+                                <input type="radio" id="cancel_2" [(ngModel)]="reason" value="poor_quality_of_service" class="form-control" [disabled]="true">
+                                <label for="cancel_2" class="color-gray">Poor quality of service</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 margin-top-5 padding-0">
+                            <div class="col-xs-12 col-md-12">
+                                <input type="radio" id="cancel_3" [(ngModel)]="reason" value="other" class="form-control" [disabled]="true">
+                                <label for="cancel_3" class="color-gray">Other</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <p class="color-darkgray margin-0 margin-top-15">Message to Seller</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 margin-top-5">
+                            <textarea name="" [(ngModel)]="message" class="form-control color-bg-white boxshadow-none" id="" cols="30" rows="5" [disabled]="true"></textarea>
+                        </div>
+                        <div class="col-xs-12 col-md-12 margin-top-25" *ngIf="isSeller&&!order.sellerAcceptedBuyerDispute">
+                            <li (click)="acceptCancelation()" class="display-inlineBlock pull-right">
+                                <a class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;">Accept</a>
+                            </li>
+                            <li routerLink="/chat/{{order.buyerId}}" class="display-inlineBlock pull-left">
+                                    <a class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;">Chat with Buyer</a>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            <div *ngIf="(order.serviceCompleteDate&&isBuyer)||order.review">
+                <order-review
+                    [orderId]="orderId"
+                    [serviceId]="order.serviceId"
+                    [sellerId]="order.sellerId"
+                    [review]="order.review"
+                    [isReviewed]="order.review"
+                    (onReviewSend)="reviewSended($event)"
+                ></order-review>
+            </div>
+            <div *ngIf="order.serviceStartDate&&isDeliveryFiles" class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px; position:relative;">
+                <div class="col-xs-12 col-md-12 padding-right-0 padding-0">
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <h4 class="display-inlineBlock color-text-black font-weight-600 margin-top-0">Deliver Files</h4>
+                        <p class="display-inlineBlock color-darkgray pull-right">{{upFiles.length ||'0'}} Total</p>
+                    </div>
+                    <div class="col-xs-12 col-md-12 margin-top-20 padding-0" style="min-height:165px;">
+                        <div class="row">
+                            <div *ngFor="let file of upFiles" class="col-xs-3 col-md-3 text-center">
+                                <div class="col-xs-12 col-md-12 padding-0" style="position: relative;height:110px; border:1px solid #e4e4e4; border-radius:3px;">
+                                    <img *ngIf="file.mediaType == 'image'" src="assets/images/icons/icon_picture.png" class="absolute_center" alt="">
+                                    <img *ngIf="file.mediaType == 'audio'" src="assets/images/icons/icon_music.png" class="absolute_center" alt="">
+                                    <img *ngIf="file.mediaType == 'video'" src="assets/images/icons/icon_video.png" class="absolute_center" alt="">
+                                    <img *ngIf="file.mediaType == 'document'" src="assets/images/icons/icon_file.png" class="absolute_center" alt="">
+                                    <a *ngIf="file.fileLink" href="{{file.fileLink}}" class="file_link"></a>
+                                </div>
+                                <div class="col-xs-12 col-md-12 padding-0 padding-top-5">
+                                    <p class="color-gray font-em-09 text-left" >{{file.fileName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 margin-top-25 padding-0">
+                        <p *ngIf="upFiles.length"  (click)="fileSaveAll()" class="display-inlineBlock color-blue font-weight-600 pull-left margin-top-12 cursor-pointer">Download all <span *ngIf="isPreparingZip"><svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;vertical-align: sub;"><circle cx="50" cy="50" fill="none" stroke="#00B4F1" stroke-width="15" r="37" stroke-dasharray="174.35839227423352 60.119464091411174" transform="rotate(56 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></span></p>
+                        <p *ngIf="upFiles.length&&isSeller" (click)="fileClean()" class="bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 padding-right-30 pull-right cursor-pointer" style="border-radius:15px;">
+                            Clean
+                        </p>
+                        <p *ngIf="upFiles.length&&isSeller" (click)="fileSubmit()" class="bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 margin-right-5 padding-right-30 pull-right cursor-pointer" style="border-radius:15px;">
+                            <span *ngIf="!isFileSending">Send</span>
+                            <span *ngIf="isFileSending"><svg width="17px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;vertical-align: sub;"><circle cx="50" cy="50" fill="none" stroke="#ffffff" stroke-width="15" r="37" stroke-dasharray="174.35839227423352 60.119464091411174" transform="rotate(56 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></span>
+                        </p>
+                        <label *ngIf="!upFiles.length&&isSeller" for="files_order" class="bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 padding-right-30 pull-right cursor-pointer" style="border-radius:15px;">
+                            <img src="assets/images/icons/icon_upload.png" class="margin-right-5" style="vertical-align: baseline;" alt=""> Upload
+                        </label>
+                        <input type="file" multiple="multiple" id="files_order" (change)="fileChanged()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px; position:relative;">
+                <div class="col-xs-12 col-md-12 padding-0">
+                    <h4 class="color-text-black font-weight-600 margin-top-0">Schedule</h4>
+                    <div class="col-xs-12 col-md-12 padding-0" style="border:1px solid #e4e4e4; border-radius:4px;">
+                        <div [ngClass]="{'col-xs-6 col-md-6 padding-0 order-datapicker':true, 'disable_input':!isBuyer}"style="border-right:1px solid #e4e4e4; position:relative;">
+                            <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="startDate" (dateTimeChange)="startDateChange()" [ngClass]="{'disabled_input':order.sellerAcceptedScheduleTime}" style="opacity: .01;position: absolute;" type="text" placeholder="Start date" class="form-control color-bg-white border-none boxshadow-none height-40-px">
+                            <input [(ngModel)]="displayStartDate" type="text" placeholder="Start date" readonly class="form-control color-bg-white border-none boxshadow-none height-40-px">
+                            <owl-date-time #dt1></owl-date-time>
+                        </div>
+                        <div class="col-xs-6 col-md-6 padding-0 order-datapicker" style="border-right:1px solid #e4e4e4; position:relative;">
+                            <input type="text" placeholder="End date"[(ngModel)]="displayEndDate" readonly class="form-control color-bg-white border-none boxshadow-none height-40-px">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+                    <div class="col-xs-11 col-md-11 padding-0" style="margin: -2px;">
+                        <input type="checkbox" [checked]="order.serviceScheduleDate&&order.serviceScheduleEndDate" class="form-control" id="shedule_buyer" disabled>
+                        <label for="shedule_buyer" class="color-gray">Schedule proposed by buyer</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0 margin-top-5">
+                    <div class="col-xs-11 col-md-11 padding-0" style="margin: -2px;">
+                        <input type="checkbox" [checked]="order.sellerAcceptedScheduleTime" class="form-control" id="shedule_seller" disabled>
+                        <label for="shedule_seller" class="color-gray">Schedule accepted by seller</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0" *ngIf="startDate&&endDate" >
+                    <a (click)="requestSchedule()" class="text-uppercase margin-top-15 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;display: inline-block;float: right;">Request Shedule</a>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-5 padding-0 padding-bottom-0 padding-top-0" *ngIf="isSeller&&order.serviceScheduleDate&&!order.sellerAcceptedScheduleTime" (click)="acceptSchedule()">
+                    <a class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;float: right">Accept Change</a>
+                </div>
+            </div>
+            <div *ngIf="!isServiceLocationHidden" class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-0" style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px; position:relative;">
+                <div class="col-xs-12 col-md-12 padding-25 padding-bottom-10">
+                    <div class="col-xs-9 col-md-9 padding-0">
+                        <h4 class="color-text-black font-weight-600 margin-bottom-5 margin-0">Service Location</h4>
+                        <img src="assets/images/icons/icon_location.png" class="width-12-px height-12-px" alt=" ">
+                        <p class="color-gray display-inlineBlock font-em-08" *ngIf="service">{{service.service.location[0].city}}, {{service.service.location[0].country}}, {{ user && ( getDistance(service.service.location[0].geoJson.coordinates)) }} km</p>
+                    </div>
+                    <!-- <div class="col-xs-3 col-md-3 padding-0 padding-top-10">
+                        <span class="pull-right">
+                            <img src="assets/images/get_direction.png" alt="">
+                            <p class="color-gray display-inlineBlock font-em-11">Get Directions</p>
+                        </span>
+                    </div> -->
+                </div>
+                <div class="col-xs-12 col-md-12 padding-25 padding-bottom-10" *ngIf="noActiveStores">
+                    Seller dont have any store!
+                </div>
+                <div class="col-xs-12 col-md-12 padding-0" *ngIf="generalMap">
+                    <agm-map #map [latitude]="generalMap.geoJson.coordinates[0]" [longitude]="generalMap.geoJson.coordinates[1]" [fitBounds]="bounds" (mapReady)="loadAPIWrapper($event)" [zoom]="10" [panControl]="true" [zoomControl]="true" [styles]="mapStyle">
+                        <div class="order_fullfillment_buyerAddress" *ngIf="BuyerMarkers">
+                            <agm-overlay *ngFor="let item of BuyerMarkers; let i = index" [latitude]="item.geoJson.coordinates[1]" [longitude]="item.geoJson.coordinates[0]" [index]="i" [overlays]="overlays" [addOverlayKey]="addOverlayKey" [removeOverlayKey]="removeOverlayKey">
+                                <div class="collapsed" style="position:absolute; background-image:url(assets/images/icons/map_division_2.png); width:195px; height:50px; background-repeat:no-repeat; z-index: 50">
+                                    <div class="bg-blue border-radius-50p" style="position:absolute; top:7px;left:8px; width:26px; height:26px;">
+                                        <p class="color-text-white font-weight-600 text-center" style="margin-top:0px;line-height: 26px;" [ngStyle]="{'font-size': i < 100 ? '18px' : '16px'}">
+                                            {{i+1}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </agm-overlay>
+                        </div>
+                        <div class="order_fullfillment_store" *ngIf="sellerStore">
+                            <agm-overlay *ngFor="let item of sellerStore; let i = index" [latitude]="item.geoJson.coordinates[0]" [longitude]="item.geoJson.coordinates[1]" [index]="i" [overlays]="overlays" [addOverlayKey]="addOverlayKey" [removeOverlayKey]="removeOverlayKey">
+
+
+                                <!-- Single marker default  -->
+                                <div *ngIf="selectedStore._id !== item._id" (click)="selectViewStore(item)" class="collapsed" style="position:absolute; background-image:url(assets/images/icons/map_division_2.png); width:195px; height:50px; background-repeat:no-repeat; z-index: 50;cursor: pointer">
+                                    <div class="bg-blue border-radius-50p" style="position:absolute; top:7px;left:8px; width:26px; height:26px;">
+                                        <p class="color-text-white font-weight-600 text-center" style="margin-top:0px;line-height: 26px;" [ngStyle]="{'font-size': i < 100 ? '18px' : '16px'}">
+                                            {{i+1}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Single marker selected  -->
+                                <div *ngIf="selectedStore._id === item._id" class="expanded clickable" (click)="selectViewStore(false)" style="margin-top: -23px; position:absolute; background-image:url(assets/images/icons/map_division_1.png); background-repeat:no-repeat; width:195px; height:75px; z-index: 200">
+                                    <div style="position:absolute; top:8px;left:10px;">
+                                        <img [src]="service.seller.profilePic" class="pull-left width-40-px height-40-px border-radius-50p" style="width:74px; height:74px; border-radius:50%;" alt="">
+                                    </div>
+                                    <div style="position:absolute; top:6px;left:60px;">
+                                        <p class="margin-bottom-0 font-px-13">{{service.seller.firstName}} {{service.seller.lastName}}</p>
+                                        <p class="margin-bottom-0 font-px-10">
+                                            <img src="assets/images/icons/icon_location.png" class="width-12-px height-12-px" alt="">{{turf([item.geoJson.coordinates[1],item.geoJson.coordinates[0]],this.user.location.geoJson.coordinates) | truncateNumber}}
+                                            km
+                                        </p>
+                                        <p class="margin-bottom-0 font-px-10 color-gray" style="width: 120px;white-space:nowrap; overflow: hidden;text-overflow: ellipsis;" [title]="item.street1+', '+item.city">{{item.street1}}, {{item.city}}</p>
+                                    </div>
+                                </div>
+                            </agm-overlay>
+                        </div>
+                        <div class="order_fullfillment_local" *ngIf="serviceMarkers">
+                            <agm-circle *ngFor="let item of serviceMarkers; let i = index" [latitude]="item.geoJson.coordinates[0]" [longitude]="item.geoJson.coordinates[1]" [radius]="8000" [fillColor]="'#0079FF'" [fillOpacity]="0.1"></agm-circle>
+                            <agm-overlay *ngFor="let item of serviceMarkers; let i = index" [latitude]="item.geoJson.coordinates[0]" [longitude]="item.geoJson.coordinates[1]" [index]="i" [overlays]="overlays" [addOverlayKey]="addOverlayKey" [removeOverlayKey]="removeOverlayKey">
+                                <div class="collapsed" style="position: absolute;width: 25px;height: 25px;z-index: 50;background-color: white;border-radius: 100%;top:5px;">
+                                    <div class="bg-blue border-radius-50p" style="position: absolute;top: 15%;left: 15%;width: 73%;height: 73%;"></div>
+                                </div>
+                            </agm-overlay>
+                        </div>
+                    </agm-map>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-20 padding-25 padding-bottom-0 padding-top-0" *ngIf="order.buyerServiceLocation">
+                    <h4 class="color-text-black font-weight-600 margin-bottom-5 margin-0">Address:</h4>
+                    <p class="color-gray display-inlineBlock font-em-08">
+                        {{order.buyerServiceLocation.street1}}<span *ngIf="order.buyerServiceLocation.street1">,</span> {{order.buyerServiceLocation.city}} {{order.buyerServiceLocation.state}}<span *ngIf="order.buyerServiceLocation.state">,</span> {{order.buyerServiceLocation.postalCode}}
+                        {{order.buyerServiceLocation.country}}
+                    </p>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-20 padding-25 padding-bottom-0 padding-top-0">
+                    <div class="col-xs-11 col-md-11 padding-0" style="margin: -2px;">
+                        <input type="checkbox" [checked]="order.buyerServiceLocation" id="location_buyer" class="form-control" disabled>
+                        <label for="location_buyer" class="color-gray">Location proposed by buyer</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-5 padding-25 padding-bottom-0 padding-top-0">
+                    <div class="col-xs-11 col-md-11 padding-0" style="margin: -2px;">
+                        <input type="checkbox" [checked]="order.sellerAcceptedBuyerServiceLocation" id="location_seller" class="form-control" disabled>
+                        <label for="location_seller" class="color-gray">Location accepted by seller</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-5 padding-25 padding-top-0 cursor-pointer" *ngIf="isBuyer&&!order.serviceStartDate">
+                    <div class="order-change-btn" (click)="isChangeLocation = !isChangeLocation" *ngIf="!sellerStore">
+                        <img src="assets/images/icons/icon_pencil.png" alt="">
+                        <p class="color-gray">Change Location</p>
+                    </div>
+                    <a *ngIf="sellerStore" [hidden]="!selectedStore" (click)="requestLocation()" class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;float: right">Request Change</a>
+                </div>
+                <div class="col-xs-12 col-md-12 margin-top-5 padding-25 padding-bottom-25 padding-top-0" *ngIf="isSeller&&order.buyerServiceLocation&&!order.sellerAcceptedBuyerServiceLocation" (click)="acceptLocation()">
+                    <a class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;float: right">Accept Change</a>
+                </div>
+                <div class="col-xs-12 col-md-12 padding-25 padding-bottom-0 padding-top-0" [hidden]="!isChangeLocation">
+                    <div class="col-xs-12 col-md-12 padding-0">
+                        <p class="color-gray margin-bottom-5">Street</p>
+                        <input type="text" [(ngModel)]="location.street1" class="width-100-p form-control height-50-px boxshadow-none" style="border-color:#e4e4e4;">
+                        <span class="error-msg" *ngFor="let error of errorsLocation.street1">{{error.message}}</span>
+                    </div>
+                    <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+                        <div class="col-xs-6 col-md-6 padding-left-0">
+                            <p class="color-gray margin-bottom-5">City</p>
+                            <input type="text" [(ngModel)]="location.city" class="width-100-p form-control height-50-px boxshadow-none" style="border-color:#e4e4e4;">
+                            <span class="error-msg" *ngFor="let error of errorsLocation.city">{{error.message}}</span>
+                        </div>
+                        <div class="col-xs-6 col-md-6 padding-right-0">
+                            <p class="color-gray margin-bottom-5">State</p>
+                            <input type="text" [(ngModel)]="location.state" class="width-100-p form-control height-50-px boxshadow-none" style="border-color:#e4e4e4;">
+                            <span class="error-msg" *ngFor="let error of errorsLocation.state">{{error.message}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+                        <div class="col-xs-6 col-md-6 padding-left-0">
+                            <p class="color-gray margin-bottom-5">Postal Code</p>
+                            <input type="text" [(ngModel)]="location.zip" class="width-100-p form-control height-50-px boxshadow-none" style="border-color:#e4e4e4;">
+                            <span class="error-msg" *ngFor="let error of errorsLocation.zip">{{error.message}}</span>
+                        </div>
+                        <div class="col-xs-6 col-md-6 padding-right-0 form-group custom-select">
+                            <p class="color-gray margin-bottom-5">Country</p>
+                            <select [(ngModel)]="location.country" class="form-control form-control-custom width-100-p height-50-px text-left dropdown-toggle pull-right" style="border-color:#e4e4e4;">
+                                        <option *ngFor="let country of countries" [value]="country.value">{{country.label}}</option>
+                                </select>
+                            <span class="error-msg" *ngFor="let error of errorsLocation.country">{{error.message}}</span>
+                            <i class="fa fa-caret-down pull-right color-mediumgray padding-4 padding-right-10 color-bg-white" style="position:absolute; right:5px; top: 37px; font-size: 18px;"></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 padding-0 margin-top-20 margin-bottom-20" (click)="requestLocation()">
+                        <a class="text-uppercase margin-top-15 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20" style="border-radius:15px;display: inline-block;float: right;">Request Change</a>
+                    </div>
+                </div>
+
+            </div>
+            <order-shipping
+                *ngIf="isShipmentBlock"
+                [orderId]="orderId"
+                [isBuyer]="isBuyer"
+                [isSeller]="isSeller"
+                [shipmentInfo]="order.shipment"
+                [isChangeable]="isBuyer&&!order.serviceStartDate"
+                [buyerServiceLocation]="order.buyerServiceLocation"
+                [sellerAcceptedBuyerServiceLocation]="order.sellerAcceptedBuyerServiceLocation"
+                (shipmentSend) = "shipmentSend($event)"
+                (shipmentAccept) = "shipmentAccept($event)"
+            >
+            </order-shipping>
+
+        </div>
+        <div id="index_contentarea" class="col-md-5 col-sm-5 col-xs-12">
+            <div class="col-xs-12 col-md-12 margin-top-10">
+                <div class="col-xs-12 col-md-12 padding-top-15">
+                    <div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow-7 margin-top-30 padding-25 padding-top-18">
+                        <div class="col-xs-12 col-md-12 padding-0" style="border-bottom:1px solid #e4e4e4;">
+                            <h4 class="color-text-black font-weight-600 margin-top-0">Order Details</h4>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0 margin-top-20" style="position:relative;">
+                            <img *ngIf="service" [src]="service.service.media[0].fileName" style="width:44px; height:44px; border-radius:50%; position:relative; float: right; top:0px; right:0px;" alt="">
+                            <p class="color-darkgray" style="width: 83%; text-align: justify;" *ngIf="service">{{service.service.description}}</p>
+                            <p class=" order_items color-darkgray font-em-09 margin-bottom-5" *ngFor="let item of order.orderItems">
+                                <span class="order_items_details">{{order.currencySymbol}}{{item.price}} for {{item.time}} {{item.timeUnitOfMeasure}} - Quantity:{{item.quantity}}</span>
+                                <span class="order_items_description">{{item.description}}</span>
+                            </p>
+                            <p class="color-darkgray font-em-09 margin-bottom-5">Transaction Fee: {{order.currencySymbol}}{{transactionFee.transactionFee | number : '1.2-2' }}</p>
+                            <!--<p class="color-darkgray font-em-09 margin-bottom-5">Transaction Fee: {{transactionTax.currencyCode}}{{transactionTax.taxAmount | number : '1.2-2'}} </p>-->
+
+                            <p class="color-darkgray font-em-09 margin-bottom-5">Total: {{order.currencySymbol}}{{order.totalAmount | number : '1.2-2'}}</p>
+                        </div>
+                        <div class="col-xs-12 col-md-12 padding-0 margin-top-10">
+                            <p class="color-darkgray pull-left font-em-09">Order ID: {{order._id}}</p>
+                            <p class="color-blue pull-right font-em-09">Paid On {{order.createdAt | date:'dd/MM' }}</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow-7 padding-25 padding-top-18 margin-top-30">
+                        <div class="col-xs-12 col-md-12 padding-0" style="border-bottom:1px solid #e4e4e4;">
+                            <h4 class="color-text-black font-weight-600 margin-top-0">Seller Contact</h4>
+                        </div>
+                        <div *ngIf="seller" class="col-xs-12 col-md-12 padding-0 margin-top-20">
+                            <div class="col-xs-5 col-md-4 text-right padding-0">
+                                <img [src]="seller.profilePic" class="pull-left" style="width:74px; height:74px; border-radius:50%;" alt="" onerror="this.src='/assets/images/no-img.jpeg';">
+                            </div>
+                            <div class="col-xs-7 col-md-8 padding-left-0">
+                                <div class="col-xs-12 col-md-12 padding-0">
+                                    <h4 onclick="open_userprofile()" class="cursor-pointer display-inlineBlock font-weight-600 margin-right-2 margin-top-0">{{seller.firstName + " " + seller.lastName}}</h4>
+                                    <img src="assets/images/icons/online@2x.png" style="vertical-align:text-bottom;" width="18px" height="18px" alt="">
+                                </div>
+                                <div class="col-xs-12 col-md-12 padding-0">
+                                    <p class="color-gray margin-bottom-0" *ngIf="seller.companyName">{{seller.companyName}}</p>
+                                    <p class="color-gray font-em-09" *ngIf="seller.location">
+                                        <i class="fa fa-map-marker color-gray"></i> {{seller.location.city}}, {{seller.location.country}}, {{ user && ( turf(seller.location.geoJson, user.location.geoJson) | truncateNumber) }} km
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-md-12 padding-0">
+                                    <div class="col-xs-6 col-md-6 padding-0" *ngIf="isBuyer">
+                                        <li  class="padding-5 padding-left-8 padding-right-8 width-90-px text-center" style="border:1px solid #AEB3BB; border-radius:20px;">
+                                            <img src="assets/images/icons/phone@2x.png" width="16px" height="16px" alt="">
+                                            <p class="display-inlineBlock color-gray margin-left-3 font-weight-600 margin-bottom-0">Call</p>
+                                        </li>
+                                    </div>
+                                    <div class="col-xs-6 col-md-6 padding-0" *ngIf="isBuyer">
+                                        <li routerLink="/chat/{{order.sellerId}}"  class="cursor-pointer padding-5 padding-left-8 padding-right-8 width-90-px text-center" style="border:1px solid #AEB3BB; border-radius:20px;">
+                                            <img src="assets/images/icons/envelope.png" width="16px" alt="">
+                                            <p class="display-inlineBlock color-gray margin-left-3 font-weight-600 margin-bottom-0">Chat</p>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loader col-xs-12 col-md-12 padding-top-15 text-center" *ngIf="!seller"><svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;vertical-align: sub;"><circle cx="50" cy="50" fill="none" stroke="#00B4F1" stroke-width="15" r="37" stroke-dasharray="174.35839227423352 60.119464091411174" transform="rotate(56 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></div>
+                    </div>
+
+                  <div class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow-7 padding-25 padding-top-18 margin-top-30">
+                    <div class="col-xs-12 col-md-12 padding-0 cursor-pointer">
+                      <h4 class="color-text-black font-weight-600 margin-top-0"><p class="color-gray text-uppercase margin-top-15" routerLink="/cancel-request/{{orderId}}">Request Cancellation</p></h4>
+                    </div>
+                  </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

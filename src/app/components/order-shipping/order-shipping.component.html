@@ -1,0 +1,202 @@
+<div
+    class="col-xs-12 col-md-12 color-bg-white div-white-box-shadow margin-top-30 padding-25"
+    style="border:1px solid #e4e4e4; border-radius:3px; border-top:0px;"
+>
+
+    <h4 class="color-text-black font-weight-600 margin-top-0">Shipment</h4>
+    <div class="col-xs-12 col-md-12 padding-0 margin-top-15">
+        <div class="margin-bottom-5 font-em-09">
+            <span class="font-weight-600">Address:</span>
+            <div
+                *ngIf="isChangeable"
+                class="order-change-btn display-inlineBlock cursor-pointer margin-left-10"
+                (click)="isChangeShipment = !isChangeShipment"
+            >
+                <img
+                    src="assets/images/icons/icon_pencil.png"
+                    alt
+                >
+                <span class="color-gray">Change Shipping Address</span>
+            </div>
+        </div>
+        <p
+            class="margin-bottom-15 font-em-09"
+            *ngIf="servLoc"
+        >
+            {{servLoc.street1}}, {{servLoc.city}}, {{servLoc.state}}, {{servLoc.country}}
+        </p>
+        <p class="margin-bottom-5 font-em-09">
+            <span class="font-weight-600">Package Shipped On:</span>
+            {{shipInfo.selectedRate.createdAt | date:'dd/MM/yyyy'}}
+        </p>
+        <p class="margin-bottom-5 font-em-09">
+            <span class="font-weight-600">Carrier :</span>
+            {{shipInfo.selectedRate.carrier}}
+        </p>
+        <p class="margin-bottom-5 font-em-09">
+            <span class="font-weight-600">Tracking :</span>
+            {{shipInfo.selectedRate.trackingCode||'No data'}}
+        </p>
+        <p class="margin-bottom-5 font-em-09">
+            <span class="font-weight-600">Expected Arrival :</span>
+            {{moment(shipInfo.selectedRate.createdAt).add(shipInfo.selectedRate.estDeliveryDays,'days').format('DD/MM/YYYY')}}
+        </p>
+    </div>
+    <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+        <div
+            class="col-xs-11 col-md-11 padding-0"
+            style="margin: -2px;"
+        >
+            <input
+                type="checkbox"
+                [checked]="servLoc"
+                class="form-control"
+                id="shedule_buyer"
+                disabled
+            >
+            <label
+                for="shedule_buyer"
+                class="color-gray"
+            >
+                Schedule proposed by buyer
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-12 padding-0 margin-top-5">
+        <div
+            class="col-xs-11 col-md-11 padding-0"
+            style="margin: -2px;"
+        >
+            <input
+                type="checkbox"
+                [checked]="servLoc&&acceptedLocal"
+                class="form-control"
+                id="shedule_seller"
+                disabled
+            >
+            <label
+                for="shedule_seller"
+                class="color-gray"
+            >
+                Schedule accepted by seller
+            </label>
+        </div>
+    </div>
+    <div
+        class="col-xs-12 col-md-12 margin-top-5 padding-0 cursor-pointer"
+        *ngIf="isSeller"
+    >
+        <a
+            (click)="acceptShipment()"
+            class="text-uppercase bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20"
+            style="border-radius:15px;float: right"
+        >
+            Accept Change
+        </a>
+    </div>
+    <div
+        class="col-xs-12 col-md-12 padding-0"
+        [hidden]="!isChangeShipment"
+    >
+        <div class="col-xs-12 col-md-12 padding-0">
+            <p class="color-gray margin-bottom-5">Street</p>
+            <input
+                type="text"
+                [(ngModel)]="shipment.street1"
+                class="width-100-p form-control height-50-px boxshadow-none"
+                style="border-color:#e4e4e4;"
+            >
+            <span
+                class="error-msg"
+                *ngFor="let error of errorsShipment.street1"
+            >
+                {{error.message}}
+            </span>
+        </div>
+        <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+            <div class="col-xs-6 col-md-6 padding-left-0">
+                <p class="color-gray margin-bottom-5">City</p>
+                <input
+                    type="text"
+                    [(ngModel)]="shipment.city"
+                    class="width-100-p form-control height-50-px boxshadow-none"
+                    style="border-color:#e4e4e4;"
+                >
+                <span
+                    class="error-msg"
+                    *ngFor="let error of errorsShipment.city"
+                >
+                    {{error.message}}
+                </span>
+            </div>
+            <div class="col-xs-6 col-md-6 padding-right-0">
+                <p class="color-gray margin-bottom-5">State</p>
+                <input
+                    type="text"
+                    [(ngModel)]="shipment.state"
+                    class="width-100-p form-control height-50-px boxshadow-none"
+                    style="border-color:#e4e4e4;"
+                >
+                <span
+                    class="error-msg"
+                    *ngFor="let error of errorsShipment.state"
+                >
+                    {{error.message}}
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+            <div class="col-xs-6 col-md-6 padding-left-0">
+                <p class="color-gray margin-bottom-5">Postal Code</p>
+                <input
+                    type="text"
+                    [(ngModel)]="shipment.zip"
+                    class="width-100-p form-control height-50-px boxshadow-none"
+                    style="border-color:#e4e4e4;"
+                >
+                <span
+                    class="error-msg"
+                    *ngFor="let error of errorsShipment.zip"
+                >
+                    {{error.message}}
+                </span>
+            </div>
+            <div class="col-xs-6 col-md-6 padding-right-0 form-group custom-select">
+                <p class="color-gray margin-bottom-5">Country</p>
+                <select
+                    [(ngModel)]="shipment.country"
+                    class="form-control form-control-custom width-100-p height-50-px text-left dropdown-toggle pull-right"
+                    style="border-color:#e4e4e4;"
+                >
+                    <option
+                        *ngFor="let country of countries"
+                        [value]="country.value"
+                    >
+                        {{country.label}}
+                    </option>
+                </select>
+                <span
+                    class="error-msg"
+                    *ngFor="let error of errorsShipment.country"
+                >
+                    {{error.message}}
+                </span>
+                <i
+                    class="fa fa-caret-down pull-right color-mediumgray padding-4 padding-right-10 color-bg-white"
+                    style="position:absolute; right:5px; top: 37px; font-size: 18px;"
+                ></i>
+            </div>
+        </div>
+        <div
+            class="col-xs-12 col-md-12 padding-0"
+            (click)="requestShipment()"
+        >
+            <a
+                class="text-uppercase margin-top-15 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20"
+                style="border-radius:15px;display: inline-block;float: right;"
+            >
+                Request Location
+            </a>
+        </div>
+    </div>
+</div>

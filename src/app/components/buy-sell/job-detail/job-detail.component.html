@@ -1,0 +1,227 @@
+<div class="modal-body modal-content text-center padding-0 width-600-px margin-left-right-auto color-bg-white border-none">
+  <div *ngIf="!model" style="display: flex; justify-content: center">
+    <sk-circle></sk-circle>
+  </div>
+
+ <div class="col-xs-12 col-md-12 padding-0 color-bg-white" style="border-radius:5px;" *ngIf="model">
+    <div class="col-xs-12 col-md-12 bg-F0F0F3" style="background: #f0f0f3; border-bottom:1px solid #e4e4e4; border-radius: 5px 5px 0 0;">
+         <h3 class="text-left color-text-black font-em-11 margin-bottom-15 font-weight-600 margin-left-10 display-inlineBlock pull-left">Live Offer Request</h3>
+         <span class="pull-right margin-top-15 margin-right-10 cursor-pointer" data-toggle="modal" (click)="closeModal()" data-target="#modal_liveOfferRequested">
+             <img src="assets/images/icons/icon_close3.png" style="width: 25px;" alt="">
+         </span>
+    </div>
+     <div
+      class="col-xs-12 col-md-12 color-bg-white text-left"
+      style="border-bottom:1px solid #e4e4e4;"
+      *ngIf="model.category"
+     >
+       <div class="col-xs-3 col-md-2 padding-top-10">
+            <p class="color-gray font-weight-600">Category:</p>
+       </div>
+       <div *ngIf="!editable" class="col-xs-9 col-md-10 padding-0">
+        <span  class="padding-top-10 form-control color-text-black border-none boxshadow-none font-weight-600">{{model.category.name || 'NoData '}}</span>
+       </div>
+
+
+       <div *ngIf="editable" class="col-xs-4 col-md-5  padding-top-0" (click)="onOpenCategory();">
+         <a  class="form-control-custom text-left dropdown-toggle padding-0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color: black; border: none !important; line-height: 2.8">{{model.category.name || 'NoData '}}</a>
+         <!--<a *ngIf="categories && category<0" class="form-control-custom text-left dropdown-toggle padding-0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="border: none !important; line-height: 2.8">Choose a Service Category</a>-->
+         <div id="addCategory" class="dropdown-menu boxshadow-none color-bg-white padding-0" style="position:absolute; border:1px solid #e4e4e4; border-radius:5px; width:94.4%; top: 31px; left:15px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+           <ul class="padding-top-8 padding-left-0">
+             <li *ngFor="let category of categories; let i = index" class="color-darkgray" (click)="onCategory(i)">
+               <p style="padding: 7px 0 7px 7px; cursor: pointer" *ngIf="category.sub" class="category_li">&nbsp;&nbsp;&nbsp;&nbsp;{{ category.name || 'NoData '}}</p>
+               <p style="padding: 10px 0 10px 10px; cursor: pointer; font-weight: bold" *ngIf="!category.sub" class="category_li">{{ category.name || 'NoData ' }}</p>
+             </li>
+           </ul>
+         </div>
+         <i class="fa fa-caret-down pull-right color-gray padding-4 padding-right-10 color-bg-white" style="position: absolute;left: 190px;top: 7px;font-size: 18px;"></i>
+       </div>
+
+       </div>
+
+     <div class="col-xs-12 col-md-12">
+        <div class="col-xs-12 col-md-12 padding-top-15">
+            <p class="color-gray font-weight-600 text-left margin-0">Request Description:</p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+           <textarea disabled *ngIf="!editable" cols="30" rows="3" class="form-control disabled-textarea padding-left-0 border-none boxshadow-none color-text-black" style="resize: none;">{{model.description || 'NoData '}}</textarea>
+           <textarea
+            *ngIf="editable"
+            name=""
+            id=""
+            cols="30"
+            rows="3"
+            class="form-control padding-left-0 border-none boxshadow-none color-text-black"
+            style="resize: none;"
+            [(ngModel)]="model.description"
+            >
+           </textarea>
+        </div>
+     </div>
+
+       <div *ngIf="!editable" class="col-xs-12 col-md-12 modal-datepicker" style="border-top:1px solid #e4e4e4; border-bottom:1px solid #e4e4e4;">
+         <div class="col-xs-3 col-md-2 padding-top-10">
+            <p class="color-gray font-weight-600">Schedule:</p>
+         </div>
+         <div class="col-xs-9 col-md-10 padding-0">
+            <span *ngIf="!editable" class="font-weight-600 padding-top-10 form-control color-text-black border-none boxshadow-none">{{displaySchedule || 'NoData '}}</span>
+           <!--<input-->
+             <!--type="text"-->
+             <!--class="form-control border-none boxshadow-none height-40-px"-->
+             <!--placeholder="{{scheduleDate}}"-->
+             <!--value="{{displayDate}}"-->
+             <!--(click)="toggleDatePicker(true)"-->
+           <!--&gt;-->
+         </div>
+       </div>
+
+   <div *ngIf="editable" class="col-xs-12 col-md-12 padding-0 modal-datepicker" style="border-top:1px solid #e4e4e4; border-bottom:1px solid #e4e4e4;">
+         <div class="col-xs-3 col-md-2 padding-top-10">
+            <p class="color-gray font-weight-600">Date:</p>
+         </div>
+         <div class="col-xs-9 col-md-10 padding-0 font-weight-600">
+           <ng-datepicker *ngIf="editable" [(ngModel)]="displayDate"  [headless]="false" [position]="'bottom-right'"></ng-datepicker>
+         </div>
+       </div>
+
+   <div *ngIf="editable" class="col-xs-12 col-md-12 padding-0 owl-time" style="border-top:none; border-bottom:1px solid #e4e4e4;">
+         <div class="col-xs-3 col-md-2 padding-top-10">
+            <p class="color-gray font-weight-600">Time:</p>
+         </div>
+         <div class="col-xs-9 col-md-10 padding-0 font-weight-600">
+             <input class="form-control border-none boxshadow-none height-40-px" id="input-time" (click)="modalTime()" [(ngModel)]="displayTime" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" placeholder="{{moment(model.scheduleDate).format('h:mm A')}}">
+             <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+         </div>
+       </div>
+
+        <div class="clearfix"></div>
+
+       <div class="col-xs-12 col-md-12 padding-left-20 padding-right-20 color-bg-white margin-top-25" *ngIf="model.media">
+         <div class="col-xs-12 col-md-12">
+           <div class="col-xs-9 col-md-9 padding-0">
+             <p class="color-gray font-weight-600 text-left">Media:</p>
+           </div>
+           <div class="col-xs-3 col-md-3" style="display: flex; justify-content: flex-end;">
+             <input type="file" id="file-input" multiple="multiple" accept="image/*" (change)="onUploadMedia($event)" style="display: none">
+             <img *ngIf="isLoading" id="img-loader" src="/assets/images/ajax-loader.gif" alt="loading..." style="width: 20px; height: 20px; position: relative; right: 15px;">
+             <label *ngIf="editable" for="file-input" ><img src="assets/images/icons/icon_camera2.png" ></label>
+           </div>
+         </div>
+         <div class="col-xs-12 col-md-12">
+           <p *ngIf="model.media.length == 0" style="text-align: left; font-weight: bold; margin-bottom: -10px;">There is no image available</p>
+           <div style="width: 96%; margin: 0 auto">
+             <swiper [config]="config">
+               <div  *ngFor="let media of model.media; let i = index;" style="width:170px;" class="item">
+                 <div class=" imgstyleFull padding-0" style=" height: 156px;background-color:#F0F0F3; position: relative; display:flex; justify-content:center; align-content:center; align-items:center;">
+                   <img *ngIf="media.mediaType.startsWith('image')" [src]="media.fileName">
+                   <div class="position: relative" *ngIf="media.mediaType.startsWith('video')">
+                     <video width="100%" [src]="media.fileName"> </video>
+                   </div>
+                   <img *ngIf="editable" src="assets/images/icons/icon_close.png" id="icon-close" style="position:absolute; top:3px; right:3px; z-index:1;" alt="" (click)="onRemoveImageItem(i);">
+                 </div>
+               </div>
+             </swiper>
+           </div>
+
+         </div>
+       </div>
+
+       <div class="col-xs-12 col-md-12 padding-left-20 padding-right-20 color-bg-white margin-top-25">
+
+        <div class="col-xs-12 col-md-12 modal-datepicker" *ngIf="!editable">
+             <div class="col-xs-3 col-md-2 padding-0 padding-top-10">
+                <p class="color-gray font-weight-600 text-left">Price Range:</p>
+             </div>
+             <div class="col-xs-9 col-md-10 padding-0">
+                <span class="padding-top-10 form-control color-text-black font-weight-600 border-none boxshadow-none">{{priceRange}}</span>
+             </div>
+        </div>
+        <div class="col-xs-12 col-md-12 modal-datepicker" *ngIf="editable">
+             <div class="col-xs-3 col-md-2 padding-0 padding-top-10">
+                <p class="color-gray font-weight-600 text-left">Min Price:</p>
+             </div>
+             <div class="col-xs-9 col-md-10 padding-0 ">
+               <input
+                 *ngIf="editable"
+                 type="text"
+                 class="price-input padding-top-10 form-control color-text-black border-none boxshadow-none font-weight-600"
+                 [(ngModel)]="model.minPrice"
+                 [textMask]="{mask: priceMask}"
+               >
+
+             </div>
+       </div>
+       <div class="col-xs-12 col-md-12 modal-datepicker" *ngIf="editable">
+            <div class="col-xs-3 col-md-2 padding-0 padding-top-10">
+               <p class="color-gray font-weight-600 text-left">Max Price:</p>
+            </div>
+            <div class="col-xs-9 col-md-10 padding-0 ">
+              <input
+                *ngIf="editable"
+                type="text"
+                class="price-input padding-top-10 form-control color-text-black border-none boxshadow-none font-weight-600"
+                [(ngModel)]="model.maxPrice"
+                [textMask]="{mask: priceMask}"
+              >
+            </div>
+      </div>
+        <div class="col-xs-12 col-md-12 modal-datepicker" *ngIf="model.location" style="display: flex; align-items: center">
+           <div class="col-xs-3 col-md-2 padding-0 padding-top-10">
+             <p class="color-gray font-weight-600 text-left">Location:</p>
+           </div>
+           <div class="col-xs-9 col-md-10 padding-0 font-weight-600">
+             <span *ngIf="locationStr && !editable" class="padding-top-10 form-control color-text-black border-none boxshadow-none">{{locationStr}}</span>
+             <ng4geo-autocomplete *ngIf="editable" [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ng4geo-autocomplete>
+
+           </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 modal-datepicker">
+            <div class="col-xs-3 col-md-2 padding-0 padding-top-10">
+              <p class="color-black font-weight-600 text-left">Expires On:</p>
+            </div>
+            <div class="col-xs-9 col-md-10 padding-0 font-weight-600">
+             <span *ngIf="model.expirationDate && moment(model.expirationDate) > moment()" class=" padding-top-10 form-control color-text-black border-none boxshadow-none">{{moment(model.expirationDate).format('MM/DD') || 'n/a'}}</span>
+             <span *ngIf="model.expirationDate && moment(model.expirationDate) <= moment()" class=" padding-top-10 form-control color-text-black border-none boxshadow-none">Expired</span>
+             <!--<span *ngIf="editable" class=" padding-top-10 form-control color-text-black border-none boxshadow-none">{{model.expiresOn || 'n/a'}}</span>-->
+             <!--<ng-datepicker *ngIf="editable" [(ngModel)]="expiresOn" [headless]="false" [position]="'top-right'"></ng-datepicker>-->
+            </div>
+        </div>
+
+       </div>
+
+
+        <div class="col-xs-12 col-md-12 padding-20 padding-left-40 padding-right-40 bg-F0F0F3 margin-top-25" style="background: #f0f0f3;
+    border-top: 1px solid #e5e5e5; border-radius: 0 0 5px 5px;">
+
+            <li class="pull-left">
+                <p *ngIf="!editable && authorName" class="color-blue font-weight-600 font-em-11 margin-0 clickable" (click)="goToChat()">Chat with {{authorName}}</p>
+            </li>
+
+            <li class="pull-right">
+                <p *ngIf="editable" class="del-btn color-text-black font-weight-600 font-em-11 margin-0 clickable" (click)="deleteJob()">DELETE</p>
+                <a
+                *ngIf="editable"
+                class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 padding-right-30"
+                style="border-radius:15px;"
+                (click)="saveJob()"
+                > SAVE </a>
+                <a
+                *ngIf="!editable && !editOfferEnabled"
+                class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 padding-right-30"
+                style="border-radius:15px;"
+                (click)="sendOffer()">SEND OFFER</a>
+                <a
+                *ngIf="!editable && editOfferEnabled"
+                class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-30 padding-right-30"
+                style="border-radius:15px;"
+                (click)="editOffer()">
+                  EDIT OFFER
+                </a>
+            </li>
+
+        </div>
+
+ </div>
+
+</div>

@@ -1,0 +1,11 @@
+.stats-header{
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.statistics-container{
+    height: 100px;
+    overflow-y: scroll;
+}

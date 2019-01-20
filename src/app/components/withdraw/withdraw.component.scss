@@ -1,0 +1,93 @@
+
+.main-title {
+  font-weight: bold;
+  font-size: 25px;
+  padding-bottom: 14px;
+}
+
+
+.balance_container {
+  background: #F6F7F9;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 3px rgba(gray, .5);
+}
+
+.balance_title {
+  color: #989B9D;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.balance {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+}
+
+
+.balance_withdraw {
+  background: #00B4F1;
+  border-radius: 20px;
+  padding: 5px 40px;
+  font-size: 13px;
+  color: white;
+  font-weight: bold;
+}
+
+.balance_info {
+  font-weight: bold;
+  padding-top: 20px;
+  > div {
+    margin-right: 20px;
+  }
+}
+
+
+
+.transaction_container {
+  box-shadow: 0 2px 3px rgba(gray, .5);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.transaction_table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.transaction__title {
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 15px;
+}
+
+.transaction_table td {
+  padding: 10px;
+  border-bottom: 1px solid #E1E1E1;
+  font-size: 15px;
+}
+
+.transaction_table th {
+  padding-bottom: 10px;
+}
+
+.transaction_table tr:nth-child(1) {
+  border-top: 1px solid #E1E1E1;
+}
+
+.transaction_table td:nth-child(1),
+.transaction_table td:nth-child(2) {
+  color: darken(#BDBFC1, 15%);
+
+}
+
+.transaction_table td:nth-child(1), .transaction_table th:nth-child(1),
+.transaction_table td:nth-child(3), .transaction_table th:nth-child(3) {
+  width: 25%;
+}
+
+.transaction_table td:nth-child(2), .transaction_table th:nth-child(2) {
+  width: 50%;
+}

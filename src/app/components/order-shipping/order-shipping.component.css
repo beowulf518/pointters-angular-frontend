@@ -1,0 +1,34 @@
+input[type="checkbox"] {
+    display: none;
+}
+input[type="checkbox"]:checked+label:after {
+    display: block;
+}
+input[type="checkbox"]+label {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+    line-height: 1;
+    font-weight: 500;
+}
+input[type="checkbox"]+label:after,
+input[type="checkbox"]+label:before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: block;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+input[type="checkbox"]+label:after {
+    display: none;
+    background-color: #00B4F1;
+    background-image: url('assets/images/icons/ic_done_black_24px.png');
+    background-position: center;
+    background-size: contain;
+}
+input[type="checkbox"]+label:before {
+    border: 2px solid rgb(172, 178, 186);
+}

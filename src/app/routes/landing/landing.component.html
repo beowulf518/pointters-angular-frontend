@@ -1,0 +1,421 @@
+<div id="index_main" class="col-xs-12 col-md-12 padding-0 padding-bottom-60" style="background-color:rgb(249,249,249)">
+
+    <div class="banner col-xs-12 col-md-12 padding-0">
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="desc">
+                        <div>Buy and Sell quality
+                            <br> local and online services</div>
+                    </div>
+                    <img src="assets/images/banner_index.png" alt="Los Angeles">
+                </div>
+
+                <div class="item">
+                    <div class="desc">
+                        <div>Buy and Sell quality
+                            <br> local and online services</div>
+                    </div>
+                    <img src="assets/images/banner_index.png" alt="Chicago">
+                </div>
+
+                <div class="item">
+                    <div class="desc">
+                        <div>Buy and Sell quality
+                            <br> local and online services</div>
+                    </div>
+                    <img src="assets/images/banner_index.png" alt="New York">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <ngx-carousel [inputs]="carouselBanner" [moveToSlide]="1" (onMove)="onmoveFn($event)">
+
+            <ngx-item NgxCarouselItem class="bannerStyle">
+                <div class="col-xs-12 col-md-12 padding-0">
+                    <img src="" class="carouselImg">
+                    <div class="banner_overlay">
+                        <div class="description">
+                            <h3 class="banner_description">Buy and Sell quality <br> local and online services</h3>
+                        </div>
+                    </div>
+                </div>
+            </ngx-item>
+
+            <ngx-item NgxCarouselItem class="bannerStyle">
+
+                <div class="col-xs-12 col-md-12 padding-0">
+                    <img src="" class="carouselImg">
+                    <div class="banner_overlay">
+                        <div class="description">
+                            <h3 class="banner_description">Buy and Sell quality <br> local and online services</h3>
+                        </div>
+                    </div>
+                </div>
+            </ngx-item>
+
+            <ngx-item NgxCarouselItem class="bannerStyle">
+                <div class="col-xs-12 col-md-12 padding-0">
+                    <img src="" class="carouselImg">
+                    <div class="banner_overlay">
+                        <div class="description">
+                            <h3 class="banner_description">Buy and Sell quality <br> local and online services</h3>
+                        </div>
+                    </div>
+                </div>
+            </ngx-item>
+
+            <button NgxCarouselPrev class='leftRs'>&lt;</button>
+            <button NgxCarouselNext class='rightRs'>&gt;</button>
+        </ngx-carousel> -->
+
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12 col-md-12 margin-top-80 padding-bottom-50" style="border-bottom:1px solid #E4E4E4">
+
+        <div class="container">
+
+            <div class="col-xs-12 col-md-12">
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category1.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Home</p>
+                </div>
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category2.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Personal</p>
+                </div>
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category3.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Events</p>
+                </div>
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category4.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Online</p>
+                </div>
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category6.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Business</p>
+                </div>
+                <div class="col-md-2 col-xs-4 text-center">
+                    <img src="assets/images/icons/category1.png" alt="">
+                    <p class="color-text-black font-em-09 margin-top-20">Mechanics</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div *ngIf="models" class="col-xs-12 col-md-12 padding-top-50">
+
+        <div class="container">
+
+            <div class="col-xs-12 col-md-12 padding-0">
+
+                <div class="col-xs-6 col-md-6">
+                    <h4>
+                        <span   class="cursor-pointer color-text-black font-weight-600 margin-2 padding-bottom-3">Popular</span>
+                        <span (click)="onSwitchPopularServices('services')" class="cursor-pointer color-gray font-weight-600 margin-2 padding-bottom-3" [ngClass]="{'toggledSection': popularServices}">Services</span>
+                        <span (click)="onSwitchPopularServices('jobs')" class="cursor-pointer color-gray font-weight-600 margin-2 padding-bottom-3" [ngClass]="{'toggledSection': popularJobs}">Jobs</span>
+                    </h4>
+                </div>
+
+                <div class="col-xs-6 col-md-6">
+                    <h5 class="color-gray font-weight-600 pull-right">View more</h5>
+                </div>
+
+            </div>
+
+
+
+            <div *ngIf="popularServices" class="services col-xs-12 col-md-12 padding-0 padding-top-20 d-flex flex-wrap" id="content_area">
+              <div *ngFor="let model of popularServices" style="flex-grow: 1;min-width: 200px; max-width: 250px;" class="margin-bottom-40 margin-right-10 margin-left-10">
+                <div class="col-md-12 col-xs-12 padding-0 sub_div div-white-box-shadow-7 div-white-box-shadow " style="max-width:250.5px;">
+
+                  <a [routerLink]="['/service/detail/'+ model.id]" routerLinkActive="active">
+                    <div class="col-md-12 col-xs-12 sub_div_image" [ngStyle]="{'background': '#fff url(' + model.media.fileName + ') no-repeat 0 0', 'background-size' : '100% 100%'}"></div>
+                  </a>
+
+                  <div class="col-md-12 col-xs-12 " *ngIf="model.location">
+                    <h4 class="text-bold" >{{model.description | truncateToWord:40}}</h4>
+                    <p class="font-em-09 margin-bottom-5 font-weight-500" *ngIf="model.prices">
+                      ${{model.prices.price}}
+                      <span *ngIf="model.priceWithoutDiscount" class="color-blue" style="text-decoration: line-through;">${{ model.priceWithoutDiscount }}</span> for {{model.prices.time}} per {{model.prices.timeUnitOfMeasure}}
+                    </p>
+
+                    <p *ngIf="(model.location && model.location[0] && model.location[0].geoJson && model.location[0].geoJson.coordinates) && (model.fulfillmentMethod.local || model.fulfillmentMethod.store || model.fulfillmentMethod.shipment)" class="font-em-09 color-mediumgray">
+                      <span class="fa fa-map-marker"></span> {{model.location[0].city}} , {{model.location[0].state}}, {{ user && ( getUserDistance(model, user) | truncateNumber ) }} km
+                    </p>
+
+                    <p *ngIf="!(model.fulfillmentMethod.local || model.fulfillmentMethod.store || model.fulfillmentMethod.shipment)" class="font-em-09 color-mediumgray">
+                      Online
+                    </p>
+
+                  </div>
+                  <div class="col-xs-12 col-md-12 sub_div_description">
+                    <div class="col-md-4 col-xs-4 padding-0 text-left">
+                      <img src="assets/images/p.png" alt="">
+                      <p class="color-mediumgray" style="font-size:12px;">{{model.pointValue}}</p>
+                    </div>
+                    <div class="col-md-4 col-xs-4 padding-0 text-center">
+                      <img src="assets/images/icons/brief2.png" style="vertical-align:text-bottom;" alt="">
+                      <p class="color-mediumgray" style="font-size:12px;">{{model.numOrders}}%</p>
+                    </div>
+                    <div class="col-md-4 col-xs-4 padding-0 text-right">
+                      <i class="fa fa-star color-mediumgray"></i>
+                      <p class="color-mediumgray" style="font-size:12px;">{{model.avgRating}}%</p>
+                    </div>
+                  </div>
+                  <div id="service_detail_link" class="cursor-pointer col-xs-12 col-md-12 padding-top-6 sub_div_footer" style="border-top:1px solid #e9e9e9;padding: 10px">
+                    <img [src]="model.seller.profilePic" alt="img" style="border-radius:50%; width:24px; height:24px; margin-right:2px;">
+                    <p [routerLink]="['/profile', model.seller.id]" class="color-mediumgray font-em-09">{{model.seller.firstName + ' ' + model.seller.lastName}}</p>
+                    <p *ngIf="model.promoted" class="p2 color-blue font-weight-600 pull-right margin-top-4" style="font-size:12px;">Promoted</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="popularJobs" class="services col-xs-12 col-md-12 padding-0 padding-top-20 d-flex flex-wrap" id="content_area">
+              <div *ngFor="let model of popularJobs" style="flex-grow: 1;min-width: 200px; max-width: 250px;" class="margin-bottom-40 margin-right-10 margin-left-10">
+                <div class="col-md-12 col-xs-12 padding-0 sub_div div-white-box-shadow-7 div-white-box-shadow " style="max-width:250.5px;">
+
+                  <a [routerLink]="['/job/detail/'+ model.id]" routerLinkActive="active">
+                    <div class="col-md-12 col-xs-12 sub_div_image" [ngStyle]="{'background': '#fff url(' + model.media.fileName + ') no-repeat 0 0', 'background-size' : '100% 100%'}"></div>
+                  </a>
+
+                  <div class="col-md-12 col-xs-12 " *ngIf="model.location">
+                    <h4 class="text-bold" >{{model.description | truncateToWord:40}}</h4>
+                    <!--<p class="font-em-09 margin-bottom-5 font-weight-500">-->
+                      <!--${{model.prices.price}}-->
+                      <!--<span *ngIf="model.priceWithoutDiscount" class="color-blue" style="text-decoration: line-through;">${{ model.priceWithoutDiscount }}</span> for {{model.prices.time}} per {{model.prices.timeUnitOfMeasure}}-->
+                    <!--</p>-->
+
+                    <div class="font-em-09" *ngIf="model.minPrice && model.maxPrice">
+                      <p> Min : ${{model.minPrice}} - Max : ${{model.maxPrice}} </p>
+                    </div>
+
+                    <p *ngIf="(model.location && model.location.geoJson && model.location.geoJson.coordinates)" class="font-em-09 color-mediumgray">
+                      <span class="fa fa-map-marker"></span> {{model.location.city}} , {{model.location.state}}
+                      <!--, {{ user && ( getUserDistance(model, user) | truncateNumber ) }} km -->
+                    </p>
+
+
+                    <p class="font-em-09 margin-bottom-5 font-weight-500">
+                      <span class="color-blue">{{model.numOffers}} Offers received</span>
+                    </p>
+
+                    <p> </p>
+
+                  </div>
+
+                  <div id="service_detail_link" class="cursor-pointer col-xs-12 col-md-12 padding-top-6 sub_div_footer" style="border-top:1px solid #e9e9e9;padding: 10px">
+                    <img [src]="model.user.profilePic" alt="img" style="border-radius:50%; width:24px; height:24px; margin-right:2px;">
+                    <p [routerLink]="['/profile', model.user.id]" class="color-mediumgray font-em-09">{{model.user.firstName + ' ' + model.user.lastName}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-md-12 padding-top-25">
+
+        <div class="container">
+
+            <div class="col-xs-12 col-md-12 padding-0">
+
+                <div class="col-xs-6 col-md-6">
+                    <h4>
+                        <span class="color-text-black font-weight-600 margin-2 padding-bottom-3">Trending Local</span>
+                      <span (click)="onSwitchLocalServices('services')" class="cursor-pointer color-gray font-weight-600 margin-2 padding-bottom-3" [ngClass]="{'toggledSection': localServices}">Services</span>
+                      <span (click)="onSwitchLocalServices('jobs')" class="cursor-pointer color-gray font-weight-600 margin-2 padding-bottom-3" [ngClass]="{'toggledSection': localJobs}">Jobs</span>
+                    </h4>
+                </div>
+
+                <div class="col-xs-6 col-md-6">
+                    <h5 class="color-gray font-weight-600 pull-right">View more</h5>
+                </div>
+
+            </div>
+
+          <div *ngIf="localServices" class="services col-xs-12 col-md-12 padding-0 padding-top-20 d-flex flex-wrap" id="content_area">
+            <div *ngFor="let model of localServices" style="flex-grow: 1;min-width: 200px; max-width: 250px;" class="margin-bottom-40 margin-right-10 margin-left-10">
+              <div class="col-md-12 col-xs-12 padding-0 sub_div div-white-box-shadow-7 div-white-box-shadow " style="max-width:250.5px;">
+
+                <a [routerLink]="['/service/detail/'+ model.id]" routerLinkActive="active">
+                  <div class="col-md-12 col-xs-12 sub_div_image" [ngStyle]="{'background': '#fff url(' + model.media.fileName + ') no-repeat 0 0', 'background-size' : '100% 100%'}"></div>
+                </a>
+
+                <div class="col-md-12 col-xs-12 " *ngIf="model.location">
+                  <h4 class="text-bold" >{{model.description | truncateToWord:40}}</h4>
+                  <p class="font-em-09 margin-bottom-5 font-weight-500" *ngIf="model.prices">
+                    ${{model.prices.price}}
+                    <span *ngIf="model.priceWithoutDiscount" class="color-blue" style="text-decoration: line-through;">${{ model.priceWithoutDiscount }}</span> for {{model.prices.time}} per {{model.prices.timeUnitOfMeasure}}
+                  </p>
+
+                  <p *ngIf="(model.location && model.location[0] && model.location[0].geoJson && model.location[0].geoJson.coordinates) && (model.fulfillmentMethod.local || model.fulfillmentMethod.store || model.fulfillmentMethod.shipment)" class="font-em-09 color-mediumgray">
+                    <span class="fa fa-map-marker"></span> {{model.location[0].city}} , {{model.location[0].state}}, {{ user && ( getUserDistance(model, user) | truncateNumber ) }} km
+                  </p>
+
+                  <p *ngIf="!(model.fulfillmentMethod.local || model.fulfillmentMethod.store || model.fulfillmentMethod.shipment)" class="font-em-09 color-mediumgray">
+                    Online
+                  </p>
+
+                </div>
+                <div class="col-xs-12 col-md-12 sub_div_description">
+                  <div class="col-md-4 col-xs-4 padding-0 text-left">
+                    <img src="assets/images/p.png" alt="">
+                    <p class="color-mediumgray" style="font-size:12px;">{{model.pointValue}}</p>
+                  </div>
+                  <div class="col-md-4 col-xs-4 padding-0 text-center">
+                    <img src="assets/images/icons/brief2.png" style="vertical-align:text-bottom;" alt="">
+                    <p class="color-mediumgray" style="font-size:12px;">{{model.numOrders}}%</p>
+                  </div>
+                  <div class="col-md-4 col-xs-4 padding-0 text-right">
+                    <i class="fa fa-star color-mediumgray"></i>
+                    <p class="color-mediumgray" style="font-size:12px;">{{model.avgRating}}%</p>
+                  </div>
+                </div>
+                <div id="service_detail_link" class="cursor-pointer col-xs-12 col-md-12 padding-top-6 sub_div_footer" style="border-top:1px solid #e9e9e9;padding: 10px">
+                  <img [src]="model.seller.profilePic" alt="img" style="border-radius:50%; width:24px; height:24px; margin-right:2px;">
+                  <p [routerLink]="['/profile', model.seller.id]" class="color-mediumgray font-em-09">{{model.seller.firstName + ' ' + model.seller.lastName}}</p>
+                  <p *ngIf="model.promoted" class="p2 color-blue font-weight-600 pull-right margin-top-4" style="font-size:12px;">Promoted</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="localJobs" class="services col-xs-12 col-md-12 padding-0 padding-top-20 d-flex flex-wrap" id="content_area">
+            <div *ngFor="let model of popularJobs" style="flex-grow: 1;min-width: 200px; max-width: 250px;" class="margin-bottom-40 margin-right-10 margin-left-10">
+              <div class="col-md-12 col-xs-12 padding-0 sub_div div-white-box-shadow-7 div-white-box-shadow " style="max-width:250.5px;">
+
+                <a [routerLink]="['/job/detail/'+ model.id]" routerLinkActive="active">
+                  <div class="col-md-12 col-xs-12 sub_div_image" [ngStyle]="{'background': '#fff url(' + model.media.fileName + ') no-repeat 0 0', 'background-size' : '100% 100%'}"></div>
+                </a>
+
+                <div class="col-md-12 col-xs-12 " *ngIf="model.location">
+                  <h4 class="text-bold" >{{model.description | truncateToWord:40}}</h4>
+                  <!--<p class="font-em-09 margin-bottom-5 font-weight-500">-->
+                  <!--${{model.prices.price}}-->
+                  <!--<span *ngIf="model.priceWithoutDiscount" class="color-blue" style="text-decoration: line-through;">${{ model.priceWithoutDiscount }}</span> for {{model.prices.time}} per {{model.prices.timeUnitOfMeasure}}-->
+                  <!--</p>-->
+
+                  <div class="font-em-09" *ngIf="model.minPrice && model.maxPrice">
+                    <p> Min : ${{model.minPrice}} - Max : ${{model.maxPrice}} </p>
+                  </div>
+
+                  <p *ngIf="(model.location && model.location.geoJson && model.location.geoJson.coordinates)" class="font-em-09 color-mediumgray">
+                    <span class="fa fa-map-marker"></span> {{model.location.city}} , {{model.location.state}}
+                    <!--, {{ user && ( getUserDistance(model, user) | truncateNumber ) }} km -->
+                  </p>
+
+
+                  <p class="font-em-09 margin-bottom-5 font-weight-500">
+                    <span class="color-blue">{{model.numOffers}} Offers received</span>
+                  </p>
+
+                  <p> </p>
+
+                </div>
+
+                <div id="service_detail_link" class="cursor-pointer col-xs-12 col-md-12 padding-top-6 sub_div_footer" style="border-top:1px solid #e9e9e9;padding: 10px">
+                  <img [src]="model.user.profilePic" alt="img" style="border-radius:50%; width:24px; height:24px; margin-right:2px;">
+                  <p [routerLink]="['/profile', model.user.id]" class="color-mediumgray font-em-09">{{model.user.firstName + ' ' + model.user.lastName}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- container -->
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-md-12 margin-top-200">
+
+        <div class="container padding-top-30" style="border-top:1px solid #e4e4e4;">
+            <div class="col-xs-12 col-md-12 padding-0">
+                <div class="col-xs-12 col-md-6 padding-0">
+                    <ul class="padding-0">
+                        <li class="display-inlineBlock margin-right-10">
+                            <img src="assets/images/icons/appstore.png" alt="">
+                        </li>
+                        <li class="display-inlineBlock">
+                            <img src="assets/images/icons/googleplay.png" alt="">
+                        </li>
+                        <li>
+                            <p class="color-gray font-em-08 margin-top-15">Copyright © 2017 Pointters All rights reserved.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6 padding-0">
+                    <ul class="pull-right bottom_menu">
+                        <li>
+                            <a href="">About</a>
+                        </li>
+                        <li>
+                            <a href="">Get the app</a>
+                        </li>
+                        <li>
+                            <a href="">Contact</a>
+                        </li>
+                        <li>
+                            <a href="">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a style="border:0px !important;" href="">Terms of Conditions</a>
+                        </li>
+                    </ul>
+                    <ul class="pull-right bottom_menu_2">
+                        <li>
+                            <p class="color-gray">Follow us on</p>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="assets/images/icons/facebook.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="assets/images/icons/twitter.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="assets/images/icons/linkedin.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="assets/images/icons/googleplus.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

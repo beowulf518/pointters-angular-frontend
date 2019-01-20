@@ -1,0 +1,94 @@
+<div class="creditCard col-xs-12 col-md-12 padding-30 margin-bottom-25 text-center"
+     style="border:1px solid #e4e4e4; border-radius:3px;">
+  <div class="col-xs-12 col-md-12 padding-0">
+    <div (click)="onSelect.emit(true)" class="cursor-pointer col-md-6 col-xs-12 padding-0 text-left">
+      <img *ngIf="selected" src="assets/images/icons/radio_btn.png" class="margin-right-5" alt="">
+      <img *ngIf="!selected" src="assets/images/icons/radio_btn_empty.png" class="margin-right-5" alt="">
+      <p class="color-dark-gray display-inlineBlock" style="cursor: pointer;">Credit or Debit Card</p>
+    </div>
+    <div class="col-md-6 col-xs-12 padding-0 text-right">
+      <img src="assets/images/icons/visa_card.png" alt="">
+      <img src="assets/images/icons/master_card.png" alt="">
+      <img src="assets/images/icons/discover.png" alt="">
+      <img src="assets/images/icons/card.png" alt="">
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <form [formGroup]="creditCardForm" [hidden]="!selected" class="col-xs-12 col-md-12 padding-0 margin-top-40">
+
+    <p class="color-gray text-left margin-bottom-5">Name on card</p>
+
+    <div class="input-container col-xs-12 col-md-12 padding-0 margin-bottom-20"
+         [ngClass]="{'has-error': creditCardForm.get('cardholderName').invalid && hasSubmited}">
+      <input   formControlName="cardholderName"
+             class="height-45-px form-control color-gray" placeholder="E.g. John Smith">
+
+    </div>
+
+    <div class="clearfix"></div>
+    <p class="color-gray text-left margin-bottom-5 margin-top-10">Card Info</p>
+    <div class="col-xs-12 col-md-12 padding-0" style="border: 1px solid #e4e4e4;  border-radius:4px;">
+      <div class="input-container d-flex col-xs-12 col-md-12 padding-0" style="border-bottom: 1px solid #e4e4e4;"
+           [ngClass]="{'has-error': creditCardForm.get('number').invalid && hasSubmited}">
+
+        <input id="cc-number" type="tel" autocomplete="cc-number" ccNumber #cardNumberInput (input)="handleCardNumberChange()" formControlName="number" id="card_number"
+               placeholder="**** ***** **** ****" class="height-45-px form-control color-gray border-none">
+
+        <div *ngIf="currentCard && currentCard != ''" class="d-flex align-items-center margin-right-10">
+          <img *ngIf="currentCard == 'visa'" src="assets/images/icons/visa_card.png" alt="">
+          <img *ngIf="currentCard == 'mastercard'" src="assets/images/icons/master_card.png" alt="">
+          <img *ngIf="currentCard == 'discover'" src="assets/images/icons/discover.png" alt="">
+          <img *ngIf="currentCard == 'amex'" src="assets/images/icons/card.png" alt="">
+        </div>
+
+
+      </div>
+
+      <div class="col-xs-12 col-md-12 padding-0">
+
+        <div class=" input-container col-md-6 col-xs-12 padding-0" style="border-right:1px solid #e4e4e4;"
+             [ngClass]="{'has-error': creditCardForm.get('expirationDate').invalid && hasSubmited}"
+        >
+          <input  id="cc-exp-date" type="tel" autocomplete="cc-exp" ccExp  formControlName="expirationDate"
+                 class="height-45-px form-control color-gray border-none" placeholder="** / ****" />
+
+
+        </div>
+
+
+        <div class="input-container  col-md-6 col-xs-12 padding-0"
+             [ngClass]="{'has-error': creditCardForm.get('cvv').invalid && hasSubmited}">
+          <input type="tel" formControlName="cvv" id="cc-cvc" autocomplete="off" ccCVC
+                 class="height-45-px form-control color-gray border-none" placeholder="****">
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+      <li (click)="submit()" class="display-inlineBlock padding-top-12 pull-right">
+        <a
+          class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-15 padding-right-15"
+          style="border-radius:15px;">
+          <span *ngIf="!isCardSaving">Save</span>
+          <span *ngIf="isCardSaving"><svg width="17px" height="17px" xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling"
+                                          style="background: none;vertical-align: sub;"><circle cx="50" cy="50"
+                                                                                                fill="none"
+                                                                                                stroke="#ffffff"
+                                                                                                stroke-width="15" r="37"
+                                                                                                stroke-dasharray="174.35839227423352 60.119464091411174"
+                                                                                                transform="rotate(56 50 50)"><animateTransform
+            attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1"
+            dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></span>
+        </a>
+      </li>
+
+      <li (click)="cancel()" class="display-inlineBlock padding-top-12 pull-right margin-right-20">
+        <a class="margin-top-40 font-px-14 font-weight-600 color-darkgray text-uppercase">Cancel</a>
+      </li>
+
+    </div>
+  </form>
+</div>

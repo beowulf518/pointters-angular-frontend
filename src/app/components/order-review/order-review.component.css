@@ -1,0 +1,88 @@
+input[type="radio"] {
+    display: none;
+}
+input[type="radio"]:checked+label:after {
+    display: block;
+}
+input[type="radio"]+label {
+    position: relative;
+    padding-right: 25px;
+    margin-bottom: 10px;
+    line-height: 1;
+    font-weight: 400;
+    cursor: pointer;
+}
+input[type="radio"]:disabled+label {
+    cursor: default;
+}
+input[type="radio"]+label:after,
+input[type="radio"]+label:before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: block;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+input[type="radio"]+label:after {
+    display: none;
+    background-color: #00B4F1;
+    background-image: url('assets/images/icons/ic_done_black_24px.png');
+    background-position: center;
+    background-size: contain;
+}
+input[type="radio"]+label:before {
+    border: 2px solid rgb(172, 178, 186);
+}
+.order_review_quality_container {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+.order_review_quality {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 31px;
+    font-weight: 600;
+    box-shadow: 2px 3px 10px 0px rgba(0, 0, 0, .2);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+.order_review_quality.selected,
+.order_review_quality:hover {
+    background-color: #00B4F1 !important;
+    color: white;
+}
+.order_review-innerWrapper {
+    width: 75%;
+    margin: 0 auto;
+}
+.order_review_range_container {
+    padding-bottom: 15px;
+    position: relative;
+}
+.range-min {
+    position: absolute;
+    left: 0;
+    top: 120%;
+}
+.range-max {
+    position: absolute;
+    right: 0;
+    top: 120%;
+}
+.order_review_comment {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+}
+.order_review-error{
+color:red;
+}
+.disabled{
+    pointer-events: none;
+}

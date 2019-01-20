@@ -1,0 +1,94 @@
+<div class="col-xs-12 col-md-12 padding-10" style="background-color:#F0F0F3;">
+  <p class="color-darkgray display-inlineBlock margin-0 margin-left-10">Send Request Offer</p>
+  <p class="color-darkgray display-inlineBlock margin-0 margin-right-10 pull-right font-em-09 margin-top-3"></p>
+</div>
+<div class="col-xs-12 col-md-12 padding-0 padding-left-0 height-40-px form-border-bottom" style="background-color:#FFFFFF;">
+  <p
+    (click)="toggleLinkService()"
+    class="color-gray display-inlineBlock margin-0 margin-left-5 line-height-40-px clickable"><img src="/assets/images/icons/clip.png" class="link-img">
+    Link a service
+  </p>
+  <p class="color-darkgray display-inlineBlock margin-0 margin-right-10 pull-right font-em-09 margin-top-3"></p>
+</div>
+
+<div class="col-xs-12 middle-panel padding-left-0 padding-right-0">
+  <div class="chat-service" *ngIf="linkedService && !noServices">
+    <div class="del-btn clickable" (click)="deleteLinkedService()">
+      <img src="assets/images/icons/icon_close2.png" alt="delete" />
+    </div>
+    <div class="separator"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-4">
+
+          <div class="text-left display-inlineBlock width-100-p">
+            <img class="display-inlineBlock service-image" *ngIf="!linkedService.isCustomRequest" src="{{linkedService.service.media.fileName}}">
+            <img class="display-inlineBlock service-image" *ngIf="linkedService.isCustomRequest" src="{{linkedService.service.media[0].fileName}}">
+          </div>
+        </div>
+        <div class="col-xs-8 padding-left-0">
+          <div class="padding-6 display-inlineBlock float-left text-center width-100-p">
+            <p class="color-darkgray font-weight-600 font-px-14 margin-bottom-0 text-left description-text">
+              {{linkedService.service.description.length > 20 ? linkedService.service.description.substr(0, 17) + '...' : linkedService.service.description}}
+            </p>
+            <p class="color-gray font-weight-300 font-px-10 margin-0 margin-top-5 font-px-12 margin-bottom-5 text-left" *ngIf="linkedService.service.location && linkedService.service.location[0] && linkedService.service.location[0].geoJson">
+              <i class="fa fa-map-marker"></i>
+              {{linkedService.service.location[0].city}},
+              {{linkedService.service.location[0].state || ''}},
+              {{getDistance(linkedService.service.location[0]['geoJson']['coordinates'])}}
+            </p>
+
+            <p *ngIf="!linkedService.isCustomRequest" class="color-gray display-inlineBlock pull-left font-px-14">
+              <img src="assets/images/p.png" alt="">
+              {{linkedService.pointValue}}
+            </p>
+
+            <p *ngIf="!linkedService.isCustomRequest" class="color-gray display-inlineBlock text-center font-px-14">
+              <i class="fa fa-briefcase color-mediumgray"></i>
+              {{linkedService.numOrders}}
+            </p>
+
+            <p *ngIf="!linkedService.isCustomRequest" class="color-gray display-inlineBlock pull-right font-px-14">
+              <i class="fa fa-star color-mediumgray"></i>
+              {{linkedService.avgRating}}%
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="create-custom-offer margin-top-15">
+
+    <div class="offer-description-section padding-15 padding-top-0">
+        <textarea
+          class="color-gray font-weight-300 form-border padding-15 grey-placeholder"
+          rows="4"
+          placeholder="Write Offer Description"
+          (ngModelChange)="validateInput()"
+          [(ngModel)]="service.description">
+        </textarea>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="col-xs-12 bottom-panel btn-panel">
+  <div class="button-wrapper row">
+    <div class="col-xs-8 text-right">
+      <div class="font-px-14 font-weight-600 color-darkgray text-uppercase padding-6 clickable" (click)="deleteCustomOffer()">CANCEL</div>
+    </div>
+    <div class="col-xs-4">
+      <div
+        class="blue-btn text-uppercase color-text-white font-px-14 font-weight-600 padding-6"
+        (click)="sendService()"
+        [ngClass]="{'bg-blue clickable': !btnDisabled, 'bg-lightgray btn-disabled': btnDisabled}"
+      >
+        SEND
+      </div>
+    </div>
+  </div>
+</div>

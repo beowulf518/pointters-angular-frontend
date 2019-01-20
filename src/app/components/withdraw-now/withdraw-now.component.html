@@ -1,0 +1,35 @@
+
+<h3 class="main-title"> Withdraw Money</h3>
+
+
+
+<form>
+  <div class="form-group">
+    <label class="color-gray mb-2"> Payout Method </label>
+
+    <select style="width: 50%" class="form-control">
+      <option value="card"> Transfer to card </option>
+      <option value="card"> Deposit </option>
+      <option value="card"> Payonner </option>
+    </select>
+
+  </div>
+
+  <div class="form-group pt-4">
+    <label class="color-gray mb-2"> Ammount </label>
+
+    <input type="text" style="width: 50%" class="form-control" placeholder="$0.00"/>
+    <div class="margin-top-10" style="font-weight: bold"> <span style="color: #00B4F1">Available Balance</span>  $245</div>
+
+  </div>
+
+
+  <div class="font-weight-600 margin-top-40"> You are about to transfer $0.00 to your card</div>
+
+  <div class="display-flex align-items-center margin-top-15">
+    <a class="withdraw_now margin-right-10" [routerLink]="['/setting/withdrawnow']"> Withdraw now </a>
+    <a class="font-px-14 font-weight-600 color-text-black text-uppercase">Cancel</a>
+  </div>
+</form>
+
+

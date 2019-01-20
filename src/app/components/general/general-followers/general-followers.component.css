@@ -1,0 +1,30 @@
+.following-container{
+    width: 606px;
+    padding: 9px 15px;
+    margin: 0 auto;
+}
+.follower-card {
+    border-radius: 4px;
+    height: 226px;
+    max-width: 190px;
+    box-shadow: 3px 6px 15px rgba(0, 0, 0, .16);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 23px 0 20px;
+    outline: 0;
+    cursor: pointer;
+}
+.follower_info-categories{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.following-container .follower-card_control a{
+    transition: all 0.3s ease-in-out;
+}
+.following-container .follower-card_control a:hover{
+    color: white !important;
+    background-color:#00B4F1!important;
+}

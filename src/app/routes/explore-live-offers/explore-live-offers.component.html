@@ -1,0 +1,580 @@
+<script src="../../services/explore-live-offers.service.ts"></script>
+<div class="col-md-8 col-xs-12 live-offers">
+
+  <div class="col-xs-12 col-md-12 padding-0">
+
+    <div
+      id="status_update"
+      class="col-xs-12 col-md-12 div-white-box-shadow-6 input-description"
+      style="border:1px solid #e4e4e4; border-top:0px; position:relative;"
+      (click)="handleSearchInputClick(true)"
+      [ngClass]="{'square-bottom': createRequestOpen }"
+    >
+
+      <div class="col-xs-12 col-md-12 padding-0 search-input-group ">
+        <div class="col-xs-8 col-md-8 padding-0">
+          <input
+            class="no-outline form-control color-gray margin-bottom-0 border-none padding-left-0 request-description"
+            [(ngModel)]="requestBody.description"
+            (ngModelChange)="handleRequestSearchInput($event)"
+            value="{{requestBody.description || 'NoData '}}"
+            placeholder="What do you need done?"
+          >
+        </div>
+        <div class="col-xs-4 col-md-4 padding-right-0">
+          <ul class="padding-0 margin-0 pull-right">
+            <li>
+              <input type="file" id="file-input" multiple="multiple"  accept="image/*" (change)="onUploadMedia($event)">
+              <img *ngIf="isLoading" id="img-loader" src="/assets/images/ajax-loader.gif" alt="loading...">
+              <label for="file-input" ><img src="assets/images/icons/icon_camera2.png"></label>
+
+              <!--<div class="col-xs-12 col-md-12 padding-20 padding-bottom-10">-->
+              <!--<input style="display: none" id="imgup" type="file" multiple accept="image/*,video/*" (change)="onUploadMedia($event)">-->
+              <!--<label for="imgup">-->
+              <!--<img src="assets/images/icons/icon_camera2.png" class="pull-right" width="32px" height="32px"-->
+              <!--alt=" ">-->
+              <!--</label>-->
+              <!--</div>-->
+            </li>
+            <li>
+              <img src="assets/images/icons/icon_location.png" id="icon-location" alt=" " (click)="focusOnLocation()">
+            </li>
+            <li>
+              <img src="assets/images/icons/icon_clock.png" id="icon-clock" alt=" " (click)="focusOnSchedule()">
+            </li>
+            <li>
+              <img src="assets/images/icons/icon_dollar.png" id="icon-dollar" alt=" " (click)="focusOnPrice()">
+            </li>
+          </ul>
+
+          <!-- <li><img src="assets/images/icons/icon_location2.png" alt=" "></li>
+          <li><img src="assets/images/icons/icon_clock2.png" alt=" "></li>
+          <li><img src="assets/images/icons/icon_dollar2.png" alt=" "></li> -->
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="createRequestOpen"
+      class="color-bg-white col-xs-12 col-md-12 padding-0 div-white-box-shadow-6 border-radius-12px"
+      style="border:1px solid #e4e4e4; border-top:1px solid #e4e4e4; z-index:1; border-top-right-radius: 0px; border-top-left-radius: 0px; z-index:2; position:relative; top:0px; left:0px;">
+      <!-- <div
+         class="search-helper"
+         *ngIf="searchHelperOpen"
+         [delayClickOutsideInit]="true"
+         [exclude]="'.search-input-group'"
+         (clickOutside)="clickOutsideSearch($event)"
+       >
+         <div class="search-recent-offers" *ngIf="!suggestionMode">
+           <div class="search-helper-section-title">Request again</div>
+           <div
+             class="search-suggestion-item"
+             *ngFor="let item of recentOffers"
+             (click)="handleSuggestion(item)"
+           >
+             {{item.label}}
+             <i class="fa fa-angle-right suggestion-arrow"></i>
+           </div>
+         </div>
+  <!--     Autofilling of description
+
+         <div class="search-recent-categories" *ngIf="!suggestionMode">
+           <div class="search-helper-section-title">Popular needs</div>
+           <div
+             class="search-suggestion-item"
+             *ngFor="let item of recentCategories; let i = index;"
+             (click)="handleSuggestion(item)"
+             [ngStyle]="{'padding-bottom': i === recentCategories.length - 1 ? '15px' : '5px'}"
+           >
+             {{item.label}}
+             <i class="fa fa-angle-right suggestion-arrow"></i>
+           </div>
+         </div>
+         <div class="search-autosuggestions" *ngIf="suggestionMode">
+           <div class="search-helper-section-title">Test</div>
+           <div
+             class="search-suggestion-item"
+             *ngFor="let item of searchSuggestions; let i = index;"
+             (click)="handleSuggestion(item)"
+             [ngStyle]="{'padding-bottom': i === searchSuggestions.length - 1 ? '15px' : '5px'}"
+           >
+             {{item.label}}
+             <i class="fa fa-angle-right suggestion-arrow"></i>
+           </div>
+         </div>
+
+       </div>
+
+       <div *ngIf="!request" class="col-xs-12 col-md-12">
+       <ul class="padding-0 margin-0 margin-top-15 margin-bottom-15 padding-0">
+       <li><a class="color-text-black font-weight-600">Request Again</a></li>
+       <li *ngIf="suggestedOffers && suggestedOffers.docs && suggestedOffers.docs[0]"><a class="color-darkgray">{{suggestedOffers.docs[0]['description']}}</a></li>
+       <li *ngIf="suggestedOffers && suggestedOffers.docs && suggestedOffers.docs[1]"><a class="color-darkgray">{{suggestedOffers.docs[1]['description']}}</a></li>
+       </ul>
+       </div> -->
+
+      <div class="col-xs-12 col-md-12 padding-20 padding-top-0 padding-left-10 padding-right-10" style="position:relative;" >
+
+        <div *ngIf="requestBody.media.length > 0" style="width: 96%; margin: 0 auto">
+          <swiper [config]="config">
+            <div  *ngFor="let media of requestBody.media; let i = index;" style="width:170px;" class="item">
+              <div class=" imgstyleFull padding-0" style=" height: 156px;background-color:#F0F0F3; position: relative; display:flex; justify-content:center; align-content:center; align-items:center;">
+                <img *ngIf="media.mediaType.startsWith('image')" [src]="media.fileName">
+                <div class="position: relative" *ngIf="media.mediaType.startsWith('video')">
+                  <video width="100%" [src]="media.fileName"> </video>
+                </div>
+                <img src="assets/images/icons/icon_close.png" id="icon-close" style="position:absolute; top:3px; right:3px; z-index:1;" alt=" " (click)="onRemoveImageItem(i);">
+              </div>
+            </div>
+            <!--<div class="swiper-button-prev" ></div>-->
+            <!--<div class="swiper-button-next" ></div>-->
+          </swiper>
+
+        </div>
+
+
+      </div>
+
+      <div class="col-xs-12 col-md-12 padding-0">
+        <div class="col-xs-12 col-md-12 padding-0">
+
+          <div class="col-xs-6 col-md-6 bg-F0F0F3 padding-bottom-10">
+            <p class="color-gray font-weight-600 margin-0 ">Category</p>
+          </div>
+          <div class="col-xs-12 col-md-12  padding-top-0" (click)="onOpenCategory();">
+            <a *ngIf="categories && category>-1 && categories[category] && categories[category].name" class="form-control-custom text-left dropdown-toggle padding-0 padding-left-10" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px; border:1px solid #e4e4e4;">{{categories[category].name}}</a>
+            <a *ngIf="categories && category<0" class="form-control-custom text-left dropdown-toggle padding-0 padding-left-10" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px; border:1px solid #e4e4e4;">Choose a Service Category</a>
+            <div id="addCategory" class="dropdown-menu boxshadow-none color-bg-white padding-0" style="position:absolute; border:1px solid #e4e4e4; border-radius:5px; width:94.7%; top: 39px; left:15px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+              <ul class="padding-top-8 padding-left-0">
+                <li *ngFor="let category of categories; let i = index" class="color-darkgray" (click)="onCategory(i)">
+                  <p style="padding: 7px 0 7px 7px; cursor: pointer" *ngIf="category.sub" class="category_li">&nbsp;&nbsp;&nbsp;&nbsp;{{ category.name || 'NoData ' }}</p>
+                  <p style="padding: 10px 0 10px 10px; cursor: pointer; font-weight: bold" *ngIf="!category.sub" class="category_li">{{ category.name || 'NoData ' }}</p>
+                </li>
+              </ul>
+            </div>
+            <!--<i class="fa fa-caret-down pull-right color-gray padding-4 padding-right-10 color-bg-white" (click)="onOpenCategory();" style="position:absolute; right:24px; top: 4px; font-size: 18px;"></i>-->
+          </div>
+
+          <div class="col-xs-6 col-md-6 bg-F0F0F3 padding-top-10 padding-bottom-10">
+            <p class="color-gray font-weight-600 margin-0">Schedule Date</p>
+          </div>
+
+          <div class="col-xs-6 col-md-6 padding-top-10 padding-bottom-10">
+            <p class="color-gray font-weight-600 margin-0">Time</p>
+            <!-- <input type="text" class="form-control dropdown-toggle boxshadow-none" data-toggle="dropdown" value="08:00am - 10:00pm"> -->
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <div class="col-xs-6 col-md-6 border border-right-none border-rounded-left">
+            <input
+              type="text"
+              class="form-control border-none boxshadow-none height-40-px"
+              value="{{moment(displayDate).format('DD/MM/YYYY') || 'NoData '}}"
+              (click)="toggleDatePicker(true)"
+            >
+          </div>
+
+          <div class="col-xs-6 col-md-6 border border-rounded-right">
+            <label style="margin-bottom: 0; font-weight: normal">
+              <input class="form-control border-none boxshadow-none height-40-px" id="input-time" [(ngModel)]="displayTime" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" placeholder="No time selected" readonly onfocus="this.blur()" style="background-color: white !important;">
+              <owl-date-time  [pickerType]="'timer'" #dt4></owl-date-time>
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="col-xs-12 col-md-12 padding-0">
+          <ng-datepicker [(ngModel)]="displayDate" [headless]="false" [isOpened]="datePickerOpen" [position]="'bottom-left'"></ng-datepicker>
+          <div class="col-xs-6 col-md-6 padding-top-10 padding-bottom-10">
+            <p class="color-gray font-weight-600 margin-0">Price Range</p>
+          </div>
+          <div class="col-xs-6 col-md-6 padding-top-10 padding-bottom-10">
+            <p class="color-gray font-weight-600 margin-0">Location</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <div class="col-xs-6 col-md-6 padding-0">
+            <div class="col-xs-6 col-md-6 border border-right-none border-rounded-left" id="min-price" style="padding-right: 10px">
+              <div class="col-xs-6 col-md-6 padding-0">
+                <p class="color-gray margin-0 margin-top-10 padding-0" style="vertical-align:middle;">From </p>
+              </div>
+              <div class="col-xs-6 col-md-6 padding-0">
+                <span style="position: absolute;top: 11px;left: -5px;">$</span>
+                <input type="text" style="padding: 0 0 0 5px" id="priceFocus" [(ngModel)]="requestBody.minPrice"  class="form-control border-none boxshadow-none height-40-px color-text-black" placeholder="0" value="{{requestBody.minPrice || 'NoData '}}">
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-6 border" id="max-price">
+              <div class="col-xs-5 col-md-5 padding-0">
+                <p class="color-gray margin-0 margin-top-10 padding-0">To </p>
+              </div>
+              <div class="col-xs-7 col-md-7 padding-0">
+                <span style="position: absolute;top: 11px;left: -10px;">$</span>
+                <input type="text" style="padding-right: 0; padding-left: 0"  [(ngModel)]="requestBody.maxPrice" id="input-max-price"  class="form-control border-none boxshadow-none height-40-px color-text-black" placeholder="10" value="{{requestBody.maxPrice || 'NoData '}}">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xs-6 col-md-6 border border-left-none border-rounded-right input-location-error padding-0">
+
+            <ng4geo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ng4geo-autocomplete>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xs-12 col-md-12 padding-top-20 padding-bottom-20">
+        <li *ngIf="request" onclick="" class="display-inlineBlock pull-right">
+          <a class="text-uppercase margin-top-40 bg-blue
+               font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20 color-text-white"
+             (click)="updateRequest()"
+             style="border-radius:15px; color:#fff !important;">Update</a>
+
+        </li>
+
+        <li *ngIf="!request" onclick="" class="display-inlineBlock pull-right">
+          <a class="text-uppercase margin-top-40 bg-blue
+               font-px-14 font-weight-600 padding-6 padding-left-20 padding-right-20 color-text-white"
+             (click)="createRequest()"
+             style="border-radius:15px; color:#fff !important;">Request</a>
+        </li>
+
+
+        <li *ngIf="!request" id="li_cancel" class="display-inlineBlock pull-right margin-right-20"
+            (click)="toggleCreateRequest(false)">
+          <a class="margin-top-40 font-px-14 font-weight-600 color-darkgray text-uppercase">Cancel</a>
+        </li>
+
+        <li *ngIf="request" id="li_cancel" class="display-inlineBlock pull-right margin-right-20"
+            (click)="toggleCreateRequest(false)">
+          <a class="margin-top-40 font-px-14 font-weight-600 color-darkgray text-uppercase">Cancel</a>
+
+        <li *ngIf="request" onclick="" class="display-inlineBlock ">
+          <a class="text-uppercase margin-top-40 color-darkgray
+               font-px-14 font-weight-600 padding-6"
+             [routerLink]="['/explore/live-offers']"
+             style="border-radius:15px !important;">New request</a>
+        </li>
+
+        <span *ngIf="request">|</span>
+
+        <li *ngIf="request" onclick="" class="display-inlineBlock">
+          <a class="text-uppercase margin-top-40 color-darkgray
+               font-px-14 font-weight-600 padding-6 padding-right-20"
+             (click)="deleteRequest()"
+             style="border-radius:15px !important;">Delete request</a>
+        </li>
+      </div>
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-md-12 margin-top-20 padding-0">
+      <h4 class="font-weight-600">Suggested Services</h4>
+    </div>
+
+
+    <div class="col-xs-12 col-md-12 padding-0">
+
+      <!-- <img src="images/icons/slide_previous.png" style="position:absolute; top:42%; left:20px; z-index:1;" alt=" ">
+      <img src="images/icons/slide_next.png" style="position:absolute; top:42%; right:20px; z-index:1;" alt=" "> -->
+      <!--
+                 <div class="col-xs-1 col-md-1">
+
+                 </div> -->
+
+      <div class="col-xs-12 col-md-12 padding-0">
+
+        <div id="liveoffers_slides" class="col-xs-12 col-md-12 padding-0">
+
+          <live-offers-slider
+            [slidesPerView]="2"
+            [slides]="suggestedOffers && suggestedOffers.docs"
+            [loadMore]="loadSuggestedOffers"
+            [extView]="true"
+            [user]="user"
+          >
+          </live-offers-slider>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-xs-12 col-md-12 padding-0" *ngIf="incomingOffers">
+
+    <div class="col-xs-12 col-md-12 margin-top-20 padding-0">
+      <div class="col-xs-9 col-md-9 padding-0">
+        <h4 class="font-weight-600">Incoming Offers</h4>
+      </div>
+      <div class="col-xs-3 col-md-3 padding-0 dropdown">
+        <img class="pull-right dropdown-toggle" src="assets/images/icons/icon_filter.png" alt=" " data-toggle="dropdown">
+        <div class="dropdown-menu dropdown_filter border-none div-white-box-shadow-1" style="">
+          <ul class="padding-0 margin-0">
+            <!--<li class="sort" (click)="setOrder('price')"><a>Sort by price</a></li>-->
+            <!--<li class="sort" (click)="setOrder('location.distance')"><a>Sort by distance</a></li>-->
+            <!--<li class="sort" (click)="setOrder('createdAt')"><a>Sort by new</a></li>        -->
+            <li class="sort" (click)="loadIncomingOffersPrice()"><a>Sort by price</a></li>
+            <li class="sort" (click)="loadIncomingOffersDistance()"><a>Sort by distance</a></li>
+            <li class="sort" (click)="loadIncomingOffersNew()"><a>Sort by new</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12 padding-0">
+
+
+
+      <div class="col-xs-12 col-md-12 padding-15 color-bg-white margin-top-15 div-white-box-shadow-7" style="border-radius:5px;"
+           *ngFor="let offer of incomingOffers | orderBy: order:reverse:'case-insensitive'; let i = index">
+        <div class="col-xs-7 col-md-7 padding-0" style="display: flex">
+          <div class="display-inlineBlock width-15-px height-15-px bg-blue border-radius-50p margin-right-5">
+            <p class="color-text-white font-em-08 text-center">{{i+1}}</p>
+          </div>
+          <div *ngIf="offer.seller && offer.seller.profilePic" style="position:relative;" class="display-inlineBlock text-center margin-right-10">
+            <img src="{{offer.seller.profilePic}}" alt=" " onerror="this.src='/assets/images/no-img.jpeg';" style="margin-left:auto; margin-right:auto; width:44px; height:44px; border-radius:50%;">
+            <!--<img src="assets/images/icons/online@2x.png" style="position:absolute; bottom:-6px; right:38%;" width="12px" height="12px" alt=" ">-->
+          </div>
+          <div class="display-inlineBlock" style="vertical-align:middle; width: 75%">
+               <span>
+                   <p class="color-darkgray font-em-09 margin-0 font-weight-500">{{offer.seller.firstName || 'NoData '}} {{offer.seller.lastName || 'NoData '}}</p>
+                   <p class="color-mediumgray font-em-08 margin-0">{{offer.description || 'NoData '}}</p>
+               </span>
+          </div>
+        </div>
+        <div class="col-xs-5 col-md-5 padding-0">
+          <div class="display-inlineBock pull-right margin-top-10" >
+                <span class="margin-right-25">
+                <img src="assets/images/icons/icon_clock.png" width="14px" height="14px" alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+                <!--<p class="text-uppercase color-gray font-em-08 display-inlineBlock">{{offer.location.distance}}</p>-->
+                <p *ngIf="!offer.expired" class="text-uppercase color-gray font-em-08 display-inlineBlock">{{getTimeAgo(offer.createdAt) || 'NoData '}}</p>
+                <p *ngIf="offer.expired" class="text-uppercase color-gray font-em-08 display-inlineBlock">Expired</p>
+              </span>
+            <span>
+                   <p class="text-uppercase color-blue font-px-14 font-weight-600 display-inlineBlock margin-right-10">$ {{offer.price || 'NoData '}}</p>
+                   <i class="fa fa-angle-right color-gray font-px-18"></i>
+              </span>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12 padding-20"></div>
+</div>
+
+<div class="col-md-4 col-xs-12">
+
+  <div class="col-xs-12 col-md-12 padding-0">
+    <div class="col-xs-12 col-md-12 color-bg-white padding-15 div-white-box-shadow-6"
+         style="border-radius:5px; border:1px solid #eaeaea;"
+         *ngIf="request"
+    >
+      <a class="requests" routerLink="/buy/request">
+        <div class="col-xs-12 col-md-12 padding-0 padding-bottom-10" >
+          <h4 class="display-inlineBlock font-weight-600 margin-0">Requests</h4>
+          <i class="fa fa-angle-right color-mediumgray font-weight-600 pull-right" style="font-size:18px"></i>
+        </div>
+      </a>
+
+      <div class="col-xs-12 col-md-12 padding-top-20 padding-0" style="border-top:1px solid #e4e4e4;">
+        <div class="col-xs-9 col-md-9 padding-left-0">
+          <p class="font-px-14">{{request.description || 'NoData '}}</p>
+          <p class="font-px-12 margin-bottom-5 color-darkgray">{{request.currencyCode || 'NoData '}}{{request.minPrice || 'NoData '}} - {{request.currencyCode || 'NoData '}} {{request.maxPrice || 'NoData '}}</p>
+          <p class="font-px-12 margin-bottom-5 color-darkgray">On {{moment(request.createdAt).format('MM/DD')}}, {{moment(request.scheduleDate).format('HH:mmA')}},</p>
+          <p class="font-px-12 margin-bottom-5 color-gray" *ngIf="request.location && user">
+            <img src="assets/images/icons/icon_location.png" class="width-15-px height-15-px" alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+            <span *ngIf="request.location.city">{{request.location.city || 'NoData '}},</span>
+            <span *ngIf="request.location.province">{{request.location.province || 'NoData '}},</span>
+            <span *ngIf="request.location.state">{{request.location.state || 'NoData '}},</span>
+            <span *ngIf="request.location.country">{{request.location.country || 'NoData '}},</span>
+            <span *ngIf="request.location.postalCode">{{request.location.postalCode || 'NoData '}},</span>
+            <span *ngIf="request.location.geoJson.coordinates">{{getDistance(request.location.geoJson.coordinates || 'NoData ')}}</span>
+          </p>
+          <p *ngIf="!request.location">No Location </p>
+        </div>
+        <div class="col-xs-3 col-md-3 padding-0" >
+          <!--<div [ngStyle]="{'background-image': 'url(' + (!requestImageErr ? request.media[0].fileName : 'assets/images/placeholder-img.png') + ')'}" class="border-radius-50p pull-right request-image" alt=" "></div>-->
+          <!--<img style="display: none;" src="{{request.media[0].fileName}}" (error)="handleImageErr()" alt=" ">-->
+          <div class="border-radius-50p pull-right request-image">
+            <img *ngIf="user && user.profilePic" style="border-radius: 50%;" src="{{user.profilePic}}" alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+            <img *ngIf="!user || !user.profilePic" style="border-radius: 50%;" src=""  alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 padding-0 margin-top-20">
+          <div class="col-xs-6 col-md-6 padding-0">
+            <p class="font-em-09 color-darkgray pull-left margin-0" *ngIf="request.media && request.media.length > 0">
+              {{request.media.length}} Photo{{request.media.length > 1 ? 's' : ''}} attached
+            </p>
+            <p class="font-em-09 color-darkgray pull-left margin-0" *ngIf="!request.media">
+              0 Photo attached
+            </p>
+          </div>
+          <div class="col-xs-6 col-md-6 padding-0">
+            <p *ngIf="request && request.expirationDate" class="font-em-09 color-blue pull-right margin-0">Expires On {{moment(request.expirationDate).format('MM/DD') || 'NoData '}}</p>
+            <p *ngIf="!request.expirationDate" class="font-em-09 color-blue pull-right margin-0">Expires On NoData</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12 padding-0"
+       [ngClass]="{'margin-top-20': request }"
+  >
+    <div class="col-xs-12 col-md-12 padding-0" style="position:relative;">
+
+      <!--[latitude]="40.848447"-->
+      <!--[longitude]="-73.856077"-->
+      <agm-map
+        #map
+        [zoom]="10"
+        [panControl]="true"
+        [zoomControl]="true"
+        [styles]="mapStyle"
+        (boundsChange)="handleMapBoundsChange($event)"
+
+      >
+        <div *ngIf="suggestedOffers && suggestedOffers.docs">
+
+          <!--<agm-marker *ngFor="let item of suggestedOffers.docs; let i = index" [latitude]="item.location[0].geoJson.coordinates[0]" [longitude]="item.location[0].geoJson.coordinates[1]"></agm-marker>-->
+          <agm-overlay
+            *ngFor="let item of suggestedOffers.docs; let i = index"
+            [longitude]="item.location[0].geoJson.coordinates[0] || ''"
+            [latitude]="item.location[0].geoJson.coordinates[1] || ''"
+            [index]="i"
+            [overlays]="overlays"
+            [addOverlayKey]="addOverlayKey"
+            [removeOverlayKey]="removeOverlayKey"
+            [handleOverlayClick]="selectItem"
+          >
+
+            <!-- Single marker default  -->
+
+            <!--&& item.length === 1-->
+            <div
+              *ngIf="selectedSuggestedItem !== i "
+              class="collapsed"
+              (click)="selectSuggested(i)"
+              style="position:absolute; background-image:url(assets/images/icons/map_division_2.png); width:195px; height:50px; background-repeat:no-repeat; z-index: 50"
+            >
+              <div class="bg-blue border-radius-50p" style="position:absolute; top:7px;left:8px; width:26px; height:26px;">
+                <p
+                  class="color-text-white font-weight-600 text-center"
+                  style="margin-top:0px;"
+                  [ngStyle]="{'font-size': i < 100 ? '18px' : '16px'}"
+                >
+                  {{incomingOffers ? incomingOffers.length+i+1: i+1}}
+                </p>
+              </div>
+            </div>
+
+            <!-- Single marker selected  -->
+            <div (click)="click(item.id)"
+              *ngIf="selectedSuggestedItem === i "
+              class="expanded clickable"
+              style="margin-top: -23px; position:absolute; background-image:url(assets/images/icons/map_division_1.png); background-repeat:no-repeat; width:195px; height:75px; z-index: 200">
+              <div style="position:absolute; top:8px;left:10px;">
+                <div
+                  class="width-40-px height-40-px border-radius-50p"
+                  [ngStyle]="{'background-image': 'url(' + item.media.fileName+ ')', 'background-size': 'cover', 'background-position': 'center'}"
+                >
+                </div>
+              </div>
+              <div style="position:absolute; top:6px;left:60px;">
+                <p class="margin-bottom-0 font-px-13">{{item.seller.firstName || 'NoData '}} {{item.seller.lastName || 'NoData '}}</p>
+                <p class="margin-bottom-0 font-px-10">
+                  <img src="assets/images/icons/location_icon.png" class="width-10-px height-10-px" alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+                  <span *ngIf="item && item.location[0] && item.location[0].geoJson">{{getDistance(item.location[0].geoJson.coordinates) || 'NoData '}}</span>
+                </p>
+                <p *ngIf="item && item.description" class="margin-bottom-0 font-px-10 color-gray">{{(item.description.length > 25 ? (item.description.substr(0, 25) + '...') : item.description) || 'NoData '}}</p>
+              </div>
+            </div>
+          </agm-overlay>
+        </div>
+
+        <!--<div *ngIf="incomingOffers && incomingOffers[num].address.coordinates">-->
+        <div *ngIf="incomingOffers">
+          <agm-overlay
+            *ngFor="let item of incomingOffers; let i = index"
+            [longitude]="item.address.coordinates ? item.address.coordinates[0]: item.location.geoJson.coordinates[0] || ''"
+            [latitude]="item.address.coordinates ? item.address.coordinates[1] : item.location.geoJson.coordinates[1] || ''"
+            [index]="i"
+            [overlays]="overlays"
+            [addOverlayKey]="addOverlayKey"
+            [removeOverlayKey]="removeOverlayKey"
+            [handleOverlayClick]="selectItem"
+          >
+
+            <!-- Single marker default  -->
+
+            <!--&& item.length === 1-->
+            <div
+              *ngIf="selectedIncomingItem !== i "
+              class="collapsed"
+              (click)="selectIncoming(i)"
+              style="position:absolute; background-image:url(assets/images/icons/map_division_2.png); width:195px; height:50px; background-repeat:no-repeat; z-index: 50"
+            >
+              <div class="bg-blue border-radius-50p" style="position:absolute; top:7px;left:8px; width:26px; height:26px;">
+                <p
+                  class="color-text-white font-weight-600 text-center"
+                  style="margin-top:0px;"
+                  [ngStyle]="{'font-size': i < 100 ? '18px' : '16px'}"
+                >
+                  {{i+1}}
+                </p>
+              </div>
+            </div>
+
+            <!-- Single marker selected  -->
+            <div
+              *ngIf="selectedIncomingItem === i "
+              class="expanded clickable"
+              style="margin-top: -23px; position:absolute; background-image:url(assets/images/icons/map_division_1.png); background-repeat:no-repeat; width:195px; height:75px; z-index: 200">
+              <div style="position:absolute; top:8px;left:10px;">
+                <div
+                  class="width-40-px height-40-px border-radius-50p"
+                  [ngStyle]="{'background-image': 'url(' + item.seller.profilePic + ')', 'background-size': 'cover', 'background-position': 'center'}"
+                >
+                </div>
+              </div>
+              <div style="position:absolute; top:6px;left:60px;">
+                <p class="margin-bottom-0 font-px-13">{{item.seller.firstName || 'NoData '}} {{item.seller.lastName || 'NoData '}}</p>
+                <p class="margin-bottom-0 font-px-10">
+                  <img src="assets/images/icons/location_icon.png" class="width-10-px height-10-px" alt=" " onerror="this.src='/assets/images/no-img.jpeg';">
+                  <span *ngIf="item && item.location && item.location.distance">{{item.location.distance || 'NoData '}}</span>
+                </p>
+                <p *ngIf="item && item.description" class="margin-bottom-0 font-px-10 color-gray">{{(item.description.length > 25 ? (item.description.substr(0, 25) + '...') : item.description) || 'NoData '}}</p>
+              </div>
+            </div>
+          </agm-overlay>
+        </div>
+
+      </agm-map>
+
+      <div class="col-xs-12 col-md-12 padding-0 margin-top-10">
+        <p class="color-mediumgray display-inlineBlock clickable" style="vertical-align:middle;" (click)="redoSearch()">Redo search</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+

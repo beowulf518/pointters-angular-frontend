@@ -1,0 +1,107 @@
+<div class="statistics-orders">
+    <div class="col-xs-12 col-md-12 padding-10" style="background-color:#F0F0F3;">
+        <p class="color-darkgray display-inlineBlock margin-0 margin-left-10">Orders</p>
+        <p class="color-darkgray display-inlineBlock margin-0 margin-right-10 pull-right font-em-09 margin-top-3" *ngIf="actionsOrders&&actionsOrders.docs"><span>{{actionsOrders.docs.length}}</span> active</p>
+    </div>
+    <div class="statistics-container col-xs-12 col-md-12 padding-0" *ngIf="actionsOrders&&actionsOrders.docs">
+        <div *ngFor="let item of actionsOrders.docs" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">{{item.order.description}}</span>
+                <span class="pull-right margin-right-10">
+                        {{item.order.currencySymbol}}{{item.order.totalAmount}}
+                    </span>
+                </span>
+            </p>
+            <p *ngIf="item.order.serviceLocation" class="color-gray margin-0 font-em-09 margin-top-5">
+                <i class="fa fa-map-marker"></i>
+                <span>
+                    {{item.order.serviceLocation.city}}, {{item.order.serviceLocation.state}}, {{ user && ( turf(item.order.serviceLocation.geoJson, user.location.geoJson) | truncateNumber) }} km
+                </span>
+            </p>
+            <p *ngIf="item.order.serviceScheduleDate" class="color-blue margin-0  font-em-09 margin-top-5">
+                Scheduled on {{item.order.serviceScheduleDate | date:'dd/MM'}}
+            </p>
+            <p *ngIf="!item.order.serviceScheduleDate" class="color-blue margin-0  font-em-09 margin-top-5">
+                Not yet scheduled
+            </p>
+        </div>
+        <div *ngIf="actionsOrders.docs.length == 0" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">You dont have any order yet</span>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="statistics-offers">
+    <div class="col-xs-12 col-md-12 padding-10 margin-top-12" style="background-color:#F0F0F3;">
+        <p class="color-darkgray display-inlineBlock margin-0 margin-left-10">Offers</p>
+        <p class="color-darkgray display-inlineBlock margin-0 margin-right-10 pull-right font-em-09 margin-top-3">
+            <span *ngIf="actionsOffers">{{actionsOffers.offers.length}}</span> active
+        </p>
+    </div>
+    <div class="statistics-container col-xs-12 col-md-12 padding-0" *ngIf="actionsOffers&&actionsOffers.offers" infiniteScroll [scrollWindow]="false" [infiniteScrollThrottle]="50" (scrolled)="loadMoreOffers()">
+        <div *ngFor="let item of actionsOffers.offers" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">
+                        {{item.description}} for {{item.workDuration}} {{item.workDurationUom}}
+                    </span>
+                <span class="pull-right margin-right-10">{{item.currencySymbol}}{{item.price}}</span>
+                </span>
+            </p>
+            <p *ngIf="item.location" class="color-gray margin-0 font-em-09 margin-top-5">
+                <i class="fa fa-map-marker"></i>
+                <span>
+                    {{item.location.city}}, {{item.location.state}}, {{ user && ( turf(item.location.geoJson,  user.location.geoJson) | truncateNumber) }} km
+                </span>
+            </p>
+            <p *ngIf="item.scheduleDate" class="color-blue margin-0  font-em-09 margin-top-5">
+                Expires on {{item.scheduleDate | date:'dd/MM'}}
+            </p>
+        </div>
+        <div *ngIf="actionsOffers.offers.length == 0" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">You dont have any offers yet</span>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="statistics-request">
+    <div class="col-xs-12 col-md-12 padding-10 margin-top-12" style="background-color:#F0F0F3;">
+        <p class="color-darkgray display-inlineBlock margin-0 margin-left-10">Request</p>
+        <p class="color-darkgray display-inlineBlock margin-0 margin-right-10 pull-right font-em-09 margin-top-3">
+            <span *ngIf="actionsReqsts">{{actionsReqsts.length}}</span> active
+        </p>
+    </div>
+    <div class="statistics-container col-xs-12 col-md-12 padding-0">
+        <div *ngFor="let item of actionsReqsts" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">{{item.description}}</span>
+                <span class="pull-right margin-right-10">{{item.currencyCode}}{{item.minPrice}}</span>
+                </span>
+            </p>
+            <p *ngIf="item.location" class="color-gray margin-0 font-em-09 margin-top-5">
+                <i class="fa fa-map-marker"></i>
+                <span>
+                    {{item.location.city}}, {{item.location.state}}, {{ user && ( turf(item.location.geoJson,  user.location.geoJson) | truncateNumber) }} km
+                </span>
+            </p>
+            <p *ngIf="item.scheduleDate" class="color-blue margin-0  font-em-09 margin-top-5">
+                Expires on {{item.scheduleDate | date:'dd/MM'}}
+            </p>
+        </div>
+        <div *ngIf="actionsReqsts&&actionsReqsts.length == 0" class="col-xs-12 col-md-12 padding-10 padding-left-20" style="border-bottom:1px solid #e4e4e4;width: 100%;">
+            <p class="color-darkgray margin-0">
+                <span class="display-inline">
+                    <span class="stats-header">You dont have any requests yet</span>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>

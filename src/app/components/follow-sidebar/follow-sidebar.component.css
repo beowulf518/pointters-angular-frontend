@@ -1,0 +1,11 @@
+.sidebar li {
+    margin: 0 -30px;
+    padding: 0 30px;
+}
+.sidebar li a {
+    height: 40px;
+    display: block;
+    width: 100%;
+    line-height: 40px;
+    font-weight: 500;
+}

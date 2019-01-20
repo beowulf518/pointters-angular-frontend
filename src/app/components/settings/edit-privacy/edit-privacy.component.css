@@ -1,0 +1,23 @@
+.custom-select{
+    position: relative;
+}
+/*.custom-select:after{*/
+    /*content: '';*/
+    /*display: block;*/
+    /*border: 5px solid transparent;*/
+    /*width: 5px;*/
+    /*height: 5px;*/
+    /*border-top-color: black;*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*right: 7%;*/
+    /*transform: translate(-50%,-20%);*/
+/*}*/
+/*.custom-select select{*/
+    /*padding: 5px 8px;*/
+    /*width: 85%;*/
+    /*background: transparent;*/
+    /*background-image: none;*/
+    /*-moz-appearance:none;*/
+    /*-webkit-appearance: none;*/
+/*}*/

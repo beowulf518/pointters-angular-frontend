@@ -1,0 +1,153 @@
+<h3 class="font-weight-600 margin-top-10 margin-bottom-60">Payment Methods</h3>
+
+
+<div class="row" *ngIf="serverErrors">
+  <div class="col-xs-12 col-md-12 error">
+    {{serverErrors.message}}
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 padding-25 margin-bottom-25" style="border:1px solid #e4e4e4; border-radius:3px;"
+     *ngFor="let method of paymentMethods">
+  <div class="col-md-2 col-xs-2 padding-0">
+    <img [src]="method.imageUrl" alt="">
+  </div>
+  <div class="col-md-4 col-xs-4 padding-top-5 padding-0">
+    <p class="color-text-black margin-bottom-0">{{method.maskedNumber}}</p>
+    <p *ngIf="method.cardType" class="color-gray font-em-08 margin-bottom-0">Expires {{method.expirationDate}}</p>
+    <p *ngIf="!method.cardType" class="color-gray font-em-08 margin-bottom-0">Email {{method.email}}</p>
+  </div>
+  <div class=" card-control-container col-md-6 col-xs-6 padding-top-15">
+    <p *ngIf="!method.isDeleting" data-toggle="modal" data-target="#deletDialog" (click)="cardDelete(method)"
+       class="devider-left color-darkgray margin-top-2 font-px-12 font-weight-600 display-inlineBlock pull-right">
+      Delete</p>
+    <p *ngIf="method.isDeleting"
+       class="devider-left color-darkgray margin-top-2 font-px-12 font-weight-600 display-inlineBlock pull-right">
+      <svg width="17px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+           preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;vertical-align: sub;">
+        <circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="15" r="37"
+                stroke-dasharray="174.35839227423352 60.119464091411174" transform="rotate(56 50 50)">
+          <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50"
+                            keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform>
+        </circle>
+      </svg>
+    </p>
+    <p (click)="editInit(method)" *ngIf="method.cardType"
+       class="devider-left color-darkgray margin-top-2 font-px-12 font-weight-600 display-inlineBlock pull-right">
+      Edit</p>
+    <p *ngIf="method.default"
+       class="cursor-default color-text-white padding-top-2 padding-bottom-2 padding-left-5 padding-right-5 margin-top-2 font-px-10 font-weight-600 display-inlineBlock pull-right bg-blue">
+      Primary</p>
+    <p *ngIf="!method.default && !method.isMakingPrimary"
+       (click)="method.isMakingPrimary = true;cardMakePrimary(method.token)"
+       class="color-darkgray margin-top-2 font-px-12 font-weight-600 display-inlineBlock pull-right">Make Primary</p>
+    <p *ngIf="!method.default && method.isMakingPrimary"
+       class="color-darkgray margin-top-2 font-px-12 font-weight-600 display-inlineBlock pull-right">
+      <svg width="17px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+           preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;vertical-align: sub;">
+        <circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="15" r="37"
+                stroke-dasharray="174.35839227423352 60.119464091411174" transform="rotate(56 50 50)">
+          <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50"
+                            keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform>
+        </circle>
+      </svg>
+    </p>
+  </div>
+
+  <div *ngIf="!(edit.editingToken !== method.token)" class="col-md-12 col-xs-12 padding-top-5">
+    <app-credit-card-form [selected]="true"
+                          [isCardSaving]="isCardSaving"
+                          [initialData]="method"
+                          (canceled)="editReset()"
+                          (submited)="updatePaymentMethod($event)"
+
+    ></app-credit-card-form>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-12 padding-30 margin-bottom-25 text-center"
+     style="border:1px solid #e4e4e4; border-radius:3px; cursor: pointer;" (click)="toggleAddingPayment()"
+     *ngIf="!addingPaymentMethod">
+  <div class="add_payment">
+    <img src="assets/images/icons/ic_payment_black_24px.png" alt="">
+    <p class="color-gray text-center display-inlineBlock">Add Payment Method</p>
+  </div>
+</div>
+
+<div class="add_payment" [hidden]="!addingPaymentMethod">
+  <h3 class="font-weight-600 margin-top-30 margin-bottom-20">Add Payment Method</h3>
+
+
+  <app-credit-card-form [selected]="selectedPaymentMethod == 'card'"
+                        [isCardSaving]="isCardSaving" (onSelect)="selectedPaymentMethod = 'card'"
+                        [initialData]="method"
+                        (canceled)="toggleAddingPayment()"
+                        (submited)="addPaymentMethod($event)"
+
+  ></app-credit-card-form>
+
+  <div class="paypal col-xs-12 col-md-12 padding-30 margin-bottom-25 text-center"
+       style="border:1px solid #e4e4e4; border-radius:3px;">
+    <div class="col-xs-12 col-md-12 padding-0 ">
+      <div (click)="changeMethodPayment('paypal')" class="cursor-pointer col-md-6 col-xs-12 padding-0 text-left">
+        <img *ngIf="selectedPaymentMethod == 'paypal'" src="assets/images/icons/radio_btn.png" class="margin-right-5"
+             alt="">
+        <img *ngIf="selectedPaymentMethod !== 'paypal'" src="assets/images/icons/radio_btn_empty.png"
+             class="margin-right-5" alt="">
+        <p  class="color-dark-gray display-inlineBlock margin-0"
+           style="cursor: pointer;">Paypal</p>
+      </div>
+      <div class="col-md-6 col-xs-12 padding-0 text-right">
+        <img src="assets/images/icons/paypal.png" alt="">
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div [hidden]="selectedPaymentMethod !== 'paypal'" class="col-xs-12 col-md-12 padding-0 margin-top-15 ">
+      <li (click)="paypalSubmit()" class="display-inlineBlock padding-top-12 pull-right">
+        <a
+          class="text-uppercase margin-top-40 bg-blue color-text-white font-px-14 font-weight-600 padding-6 padding-left-15 padding-right-15"
+          style="border-radius:15px;">
+          <span *ngIf="!isPaypalSaving">Save</span>
+          <span *ngIf="isPaypalSaving"><svg width="17px" height="17px" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling"
+                                            style="background: none;vertical-align: sub;"><circle cx="50" cy="50"
+                                                                                                  fill="none"
+                                                                                                  stroke="#ffffff"
+                                                                                                  stroke-width="15"
+                                                                                                  r="37"
+                                                                                                  stroke-dasharray="174.35839227423352 60.119464091411174"
+                                                                                                  transform="rotate(56 50 50)"><animateTransform
+            attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1"
+            dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></span>
+        </a>
+      </li>
+      <li (click)="toggleAddingPayment()" class="display-inlineBlock padding-top-12 pull-right ">
+        <a class="font-px-14 font-weight-600 color-darkgray text-uppercase" style="display:block;margin-right: 15px;">Cancel</a>
+      </li>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div id="deletDialog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Warning!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure that you want to delete the payment method?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-default btn-color-custom" data-dismiss="modal" (click)="modalAccept()">
+          Yes
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- </form> -->

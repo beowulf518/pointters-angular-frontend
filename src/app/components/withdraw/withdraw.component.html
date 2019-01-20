@@ -1,0 +1,69 @@
+<div>
+
+  <h3 class="main-title"> Withdraw Money</h3>
+
+  <div class="balance_container">
+    <h5 class="balance_title"> Your Balance </h5>
+    <div class="balance"> $ 245</div>
+
+    <div class="balance_info d-flex" style="align-items: end">
+      <div> $187 <span style="color: #00B4F1"> Paid out</span></div>
+      <div> $68 <span style="color: #FFC607"> Pending</span></div>
+
+      <a style="margin-left: auto" class="balance_withdraw" [routerLink]="['/setting/withdrawnow']"> Withdraw now </a>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="pt-5 transaction_container">
+    <h4 class="transaction__title"> Last 5 Transactions </h4>
+
+    <table class="transaction_table">
+      <thead>
+        <th>
+          Date
+        </th>
+
+        <th>
+          Withdrawn to
+        </th>
+
+        <th>
+          Ammount
+        </th>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td> May 16, 17</td>
+          <td> Chase Bank </td>
+          <td> $55.89</td>
+        </tr>
+
+        <tr>
+          <td> May 16, 17</td>
+          <td> Chase Bank </td>
+          <td> $55.89</td>
+        </tr>
+
+        <tr>
+          <td> May 16, 17</td>
+          <td> Chase Bank </td>
+          <td> $55.89</td>
+        </tr>
+
+        <tr>
+          <td> May 16, 17</td>
+          <td> Chase Bank </td>
+          <td> $55.89</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a class="display-block margin-top-10" [routerLink]="['/setting/withdrawnow']" style="color: #00B4F1; font-weight: bold"> View transaction history</a>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.error-msg{
+    position: absolute;
+    color: red;
+    right: 10px;
+    top: 12px;
+}
+.error{
+    color: red;    
+}
+.input-container{
+    position:relative;
+}
+.card-control-container p{
+    cursor: pointer;
+}
+.card-control-container p.cursor-default{
+    cursor: default;    
+}
+.devider-left{
+    margin-left:10px;
+    padding-left: 10px;
+    border-left:1px solid #e2e2e2;
+}
+.devider-right{
+    margin-right:10px;
+    padding-right: 10px;
+    border-right:1px solid #e2e2e2;
+}
+.btn-color-custom{
+    background-color: #00B4F1;
+    color: white;
+    border-color: #00B4F1;
+}
